@@ -14,7 +14,7 @@ Current unit:
 - Unit 2: Selector Kernels
 
 Current sub-unit / frontier:
-- provenance and candidate membership for `selectBestQuote` in
+- global optimality over valid candidates for `selectBestQuote` in
   `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Last solid checkpoint:
@@ -60,8 +60,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- solve Session 8's provenance/membership batch, then move toward global
-  optimality rather than repeating local selector preservation lemmas
+- solve Session 9's global optimality batch, focusing on validity-conditioned
+  dominance over allowed candidates
 
 ## Stable Profile
 
@@ -85,6 +85,7 @@ Next intended move:
   - local quote-selector facts for `betterQuote`
   - list-wide validity preservation for `selectBestQuote`
   - score monotonicity and combined validity/output contract
+  - provenance and candidate membership for `selectBestQuote`
 - Current repo transition:
   - active learner work is moving from global `Basic.lean` into unit-specific
     scratch files
@@ -341,6 +342,44 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-26 - Unit 2 Provenance Complete And Optimality Setup
+
+Session intent:
+- review Session 8 provenance work and move to global optimality over valid
+  candidates
+
+Tutor actions:
+- validated the completed provenance/membership batch
+- ran a focused prerequisite audit via subagent before finalizing the next
+  session roundup
+- scaffolded Session 9 global optimality exercises in Unit 2 Scratch
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checked before scaffolding
+- the same command checked after scaffolding, with six intended `sorry`
+  warnings
+
+Learner response / behavior:
+- completed the provenance batch after needing extra explanation for `rcases`,
+  nested disjunctions, and `simpa`
+- is ready to move forward but needs new tools surfaced before handoff
+
+Tutor analysis:
+- Session 8 completion score: 8/10. Correctness is solid and the final bundled
+  theorem uses the right composition shape after guidance; the main growth area
+  is recognizing when a theorem should be composed from prior lemmas instead of
+  reproved by induction.
+
+Checkpoint result:
+- Unit 2 now covers validity, output monotonicity, provenance, and a basic
+  bundled selector contract
+- current frontier is global optimality over valid candidates
+
+Next move:
+- solve Session 9 by defining validity-conditioned dominance and lifting it
+  from `betterQuote` to `selectBestQuote`
 
 ### 2026-04-26 - Unit 2 Score Contracts And Provenance Setup
 
