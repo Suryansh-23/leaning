@@ -54,14 +54,23 @@ Before deciding what to do next:
 
 ## What To Surface In Sessions
 
-Include a lightweight roundup of new tools when useful, but do not leak
-solutions through the roundup. Good categories:
+Before handing over a new exercise batch, include a lightweight prerequisite
+roundup of any new syntax, proof constructs, mathlib/list APIs, tactics, or
+modeling patterns needed to begin the session. This is mandatory when the batch
+introduces a new proof surface; the learner should not have to ask for the
+tools separately.
+
+Do not leak solutions through the roundup. Good categories:
 
 - syntax / proof constructs
 - mathlib lemmas or tactics with clear payoff
 - modeling patterns
 - common failure modes
 - adjacent proof shapes that broaden the learner’s search space
+
+Keep the roundup calibrated: omit already-practiced basics unless they matter
+in a new way, but always surface genuinely new prerequisites before the learner
+starts.
 
 ## Validation
 

@@ -64,7 +64,8 @@ Produce:
    learner has shown fluency with the local tools
 3. why it is next
 4. why competing next branches lost
-5. a lightweight tool roundup
+5. a prerequisite tool roundup that explicitly lists any new syntax, tactics,
+   APIs, proof constructs, or modeling patterns needed for the batch
 6. hint policy reminders
 7. whether `MEMORY.md` should be updated after the session
 
@@ -75,6 +76,21 @@ The proposed session should be:
 - not another stale variant of the same local proof pattern
 - mixed between theorem proving and definition/spec design once the unit's
   basic vocabulary is established
+
+## Prerequisite Roundup Policy
+
+The roundup is not optional if the session introduces a new proof surface.
+Before handoff, identify the exact tools the learner needs to start, such as:
+
+- syntax or notation, for example list membership `x ∈ xs`
+- proof constructs, for example `left`, `right`, `constructor`, or `rcases`
+- relevant simplification behavior, for example membership in `x :: xs`
+- modeling patterns, for example executable function versus spec predicate
+
+Keep it short and calibrated to the learner's current level. Do not repeat
+already-mastered basics unless they behave differently in the new session.
+Do not include proof skeletons unless the learner explicitly asks for that
+level of help.
 
 ## Routing Heuristics
 

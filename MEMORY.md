@@ -147,6 +147,24 @@ This is the durable conversation-to-progress bridge.
 ### 2026-04-26
 
 Observation:
+- The learner had to ask for the prerequisite tool roundup for Session 8, even
+  though list membership and disjunction handling were new proof surfaces.
+
+Why it matters:
+- New-session setup is incomplete if it omits the tools needed to start the
+  exercise batch.
+
+How the tutor should adapt:
+- Always include a prerequisite roundup before handoff whenever a session
+  introduces new syntax, APIs, proof constructs, or modeling patterns. Keep it
+  calibrated and non-solution-leaking.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
 - The learner wants completion reviews to include a score out of 10 with
   analysis, and wants new session roundups to start with a unit progress
   indicator.
