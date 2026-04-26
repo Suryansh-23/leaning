@@ -60,6 +60,12 @@ modeling patterns needed to begin the session. This is mandatory when the batch
 introduces a new proof surface; the learner should not have to ask for the
 tools separately.
 
+When modeling a new session scaffold, run a bounded tool/prerequisite audit
+first. Prefer using a small subagent for this audit when available: ask it to
+inspect the proposed exercises and list the new Lean tools, notation, proof
+constructs, APIs, and modeling ideas the learner needs before starting. Fold
+that audit into the roundup before handoff.
+
 Do not leak solutions through the roundup. Good categories:
 
 - syntax / proof constructs
@@ -71,6 +77,10 @@ Do not leak solutions through the roundup. Good categories:
 Keep the roundup calibrated: omit already-practiced basics unless they matter
 in a new way, but always surface genuinely new prerequisites before the learner
 starts.
+
+The roundup should explain new tools effectively, not merely name them. For
+each new tool, include what it does, when it appears in the session, and one
+minimal non-solution example if useful.
 
 ## Validation
 

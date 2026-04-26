@@ -80,7 +80,13 @@ The proposed session should be:
 ## Prerequisite Roundup Policy
 
 The roundup is not optional if the session introduces a new proof surface.
-Before handoff, identify the exact tools the learner needs to start, such as:
+Before handoff, identify the exact tools the learner needs to start. When
+modeling a new session scaffold, run a bounded prerequisite audit first;
+prefer a small subagent for that audit when available. The audit should inspect
+the proposed exercises and report which Lean tools, notation, APIs, proof
+constructs, and modeling ideas are genuinely new or newly important.
+
+Examples of prerequisites to detect:
 
 - syntax or notation, for example list membership `x ∈ xs`
 - proof constructs, for example `left`, `right`, `constructor`, or `rcases`
@@ -91,6 +97,13 @@ Keep it short and calibrated to the learner's current level. Do not repeat
 already-mastered basics unless they behave differently in the new session.
 Do not include proof skeletons unless the learner explicitly asks for that
 level of help.
+
+For each new prerequisite that survives calibration, explain it effectively:
+
+- what it means
+- why it appears in this session
+- how to recognize the goal or hypothesis shape that calls for it
+- a minimal non-solution example, when that helps
 
 ## Routing Heuristics
 

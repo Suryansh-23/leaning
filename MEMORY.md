@@ -147,6 +147,25 @@ This is the durable conversation-to-progress bridge.
 ### 2026-04-26
 
 Observation:
+- The learner wants a bounded subagent/tool audit whenever the tutor models a
+  new session scaffold, so prerequisite tools are identified and explained
+  before handoff.
+
+Why it matters:
+- Missing prerequisite explanations slow the session down and force the learner
+  to ask for setup that should have been part of the scaffold.
+
+How the tutor should adapt:
+- Before presenting a new session, run a focused prerequisite audit over the
+  exercise batch, preferably via subagent when available, then explain new
+  tools with meaning, trigger shape, and minimal non-solution examples.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
 - The learner had to ask for the prerequisite tool roundup for Session 8, even
   though list membership and disjunction handling were new proof surfaces.
 
