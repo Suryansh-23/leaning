@@ -148,6 +148,24 @@ This is the durable conversation-to-progress bridge.
 ### 2026-04-26
 
 Observation:
+- The learner clarified that "more problems per session" means compressing each
+  unit into fewer, faster sessions, not adding more micro-drills around the same
+  concept.
+
+Why it matters:
+- Session batches should cover coherent concept arcs and move the unit forward,
+  rather than increasing volume without increasing progression rate.
+
+How the tutor should adapt:
+- Design larger sessions that combine setup, one or two core proof shapes,
+  definition/spec work, and a stretch/bundling theorem when feasible.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
 - The learner wants a bounded subagent/tool audit whenever the tutor models a
   new session scaffold, so prerequisite tools are identified and explained
   before handoff.

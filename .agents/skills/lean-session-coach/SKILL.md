@@ -76,6 +76,9 @@ The proposed session should be:
 - not another stale variant of the same local proof pattern
 - mixed between theorem proving and definition/spec design once the unit's
   basic vocabulary is established
+- sized to reduce the number of sessions needed to complete the unit, by
+  covering a coherent concept arc rather than adding extra near-duplicate
+  micro-exercises
 
 ## Prerequisite Roundup Policy
 
