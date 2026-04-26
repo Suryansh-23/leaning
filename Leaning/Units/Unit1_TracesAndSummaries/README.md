@@ -8,6 +8,11 @@ Current migration target:
 - `Event`, `applyEvent`, `applyEvents`, borrow-free/repay-free traces, and
   trace summary material from `Basic.lean`
 
+Current curated status:
+- `Core.lean` now provides a namespaced curated mirror of the trace and summary
+  material
+- `Basic.lean` remains the live scratch/reference source
+
 What this unit should teach:
 - why reducers compose
 - how restricted traces let stronger theorems hold

@@ -8,6 +8,11 @@ Purpose:
 Current migration target:
 - early `Position` / `safe` / `deposit` / `repay` / `borrowIfSafe` material from `Basic.lean`
 
+Current curated status:
+- `Core.lean` now provides a namespaced curated mirror of the early local
+  state-transition material
+- `Basic.lean` remains the live scratch/reference source
+
 What this unit should teach:
 - how to read goals and hypotheses in Infoview
 - the difference between a definition, a proposition, and a proof term

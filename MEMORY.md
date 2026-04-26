@@ -24,8 +24,9 @@ Current live artifact:
 
 Current curated migration status:
 - repo structure, tutor docs, unit skeletons, and skills are in place
-- solved Unit 0 / Unit 1 material has **not** yet been cleanly migrated into
-  curated module content
+- solved Unit 0 / Unit 1 material now has curated namespaced mirrors in the
+  unit `Core.lean` modules
+- the live scratch flow remains in `Leaning/Basic.lean`
 
 Ready to branch into:
 - Unit 2: Selector Kernels
@@ -52,6 +53,8 @@ What was established:
 - the curriculum has been broadened beyond the early local proof loop
 - the next true content branch should leave the local trough rather than
   repeating more of the same theorem family
+- Unit 0 / Unit 1 now have curated module surfaces in addition to the live
+  scratch artifact
 
 Next intended move:
 - start Unit 2 or Unit 3 rather than extending more trace-summary variants
@@ -179,6 +182,8 @@ Tutor actions:
 - added tutor-facing repo docs
 - created unit skeletons, tutor docs, and repo-local skills
 - preserved historical Lean work in the appendix
+- added curated Unit 0 / Unit 1 module surfaces that mirror the solved
+  foundations without destabilizing `Basic.lean`
 
 Validation / tests:
 - `~/.elan/bin/lake env lean Leaning/Basic.lean`
@@ -198,6 +203,7 @@ Tutor analysis:
 Checkpoint result:
 - repo architecture and curriculum structure are now in place
 - learner frontier remains in `Leaning/Basic.lean` through Session 5
+- early solved material now also exists in curated unit surfaces
 
 Next move:
 - start the next substantive unit branch from the current frontier
