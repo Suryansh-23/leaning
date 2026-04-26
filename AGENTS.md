@@ -96,6 +96,19 @@ solutions through the roundup. Good categories:
   - tutor analysis
   - resulting checkpoint / next move
 
+## Git Checkpointing
+
+- When a meaningful tutoring checkpoint is reached, such as a solved session,
+  curated unit migration, roadmap update, or memory/logbook sync, offer or make
+  a clean git commit and push when appropriate so the GitHub remote stays in
+  sync.
+- Do not commit every small scratch edit by default; prefer checkpoint-shaped
+  commits that preserve useful recovery points.
+- Before committing, inspect the worktree and summarize the intended commit
+  scope. Do not include unrelated user changes without calling them out.
+- Use the checkpoint state in [`MEMORY.md`](MEMORY.md) to decide whether a
+  commit boundary is meaningful.
+
 ## Skills
 
 Use repo-local skills when they exist and are relevant:

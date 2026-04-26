@@ -11,26 +11,27 @@ When the tutor needs to know "where are we?", start here before inferring from
 the rest of the repo.
 
 Current unit:
-- Unit 1: Traces and Summaries
+- Unit 2: Selector Kernels
 
 Current sub-unit / frontier:
-- trace summaries and restricted-trace theorems in `Leaning/Basic.lean`
+- list-wide validity for `selectBestQuote` in
+  `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Last solid checkpoint:
 - completed through the current Session 5 material in `Leaning/Basic.lean`
 
 Current live artifact:
-- `Leaning/Basic.lean`
+- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Current curated migration status:
 - repo structure, tutor docs, unit skeletons, and skills are in place
 - solved Unit 0 / Unit 1 material now has curated namespaced mirrors in the
   unit `Core.lean` modules
-- the live scratch flow remains in `Leaning/Basic.lean`
+- Unit 2 active work has moved into the unit-specific `Scratch.lean` file
 
 Ready to branch into:
-- Unit 2: Selector Kernels
 - Unit 3: Strategic Games and Mechanisms
+- Unit 4: Arithmetic and Bounds, after selector basics need scoring/bounds
 
 Explicitly not started as Lean artifacts yet:
 - AMM core
@@ -47,6 +48,8 @@ Date:
 What was verified:
 - `Leaning/Basic.lean` checks
 - the package root `Leaning` builds with the new unit module tree
+- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks with intended
+  `sorry` placeholders for Session 6
 
 What was established:
 - the repo now has a stable book/tutor structure
@@ -57,7 +60,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- start Unit 2 or Unit 3 rather than extending more trace-summary variants
+- solve `selectBestQuote_valid_if_fallback_valid`, using the local
+  `betterQuote_valid_if_left_valid` theorem as the recursive step
 
 ## Stable Profile
 
@@ -72,15 +76,16 @@ Next intended move:
 
 ## Current Frontier
 
-- Active live file: `Leaning/Basic.lean`
+- Active live file: `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 - Covered so far:
   - tiny state models
   - guarded transitions
   - aggregates and traces
   - trace summaries
-  - first selector/market-shaped ideas are next
+  - local quote-selector facts for `betterQuote`
 - Current repo transition:
-  - moving from session log to unit-based book structure
+  - active learner work is moving from global `Basic.lean` into unit-specific
+    scratch files
 
 ## Concept State
 
@@ -140,6 +145,44 @@ This is the durable conversation-to-progress bridge.
 ### 2026-04-26
 
 Observation:
+- The learner pointed to `Leaning/Appendix/BasicHistory.lean` as evidence that
+  basic `simp`, `by_cases`, induction, generalized IHs, and local selector
+  case proofs are already mostly familiar.
+
+Why it matters:
+- Session setup should not over-teach elementary tactics; early Unit 2 local
+  lemmas may be treated as quick calibration before moving to stronger
+  selector contracts.
+
+How the tutor should adapt:
+- Keep roundups focused on genuinely new Lean/modeling concepts, such as
+  derived instances, executable-vs-spec boundaries, membership, optimality, and
+  list-wide correctness.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
+- The learner wants the tutor to set up the session workspace before handing
+  over, including the next Lean scaffold and task instructions.
+
+Why it matters:
+- Session starts should minimize administrative friction; the learner expects
+  to open the prepared file and perform the proof work directly.
+
+How the tutor should adapt:
+- Before each session, inspect the checkpoint, add or prepare the relevant
+  exercise scaffold in the live Lean surface when appropriate, and then give
+  concise instructions for what the learner should prove.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
 - The learner pushed back on repetitive local variants and wanted a broader,
   more forward-looking roadmap.
 
@@ -170,6 +213,77 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-26 - Unit 2 Warm-Up Review And List-Wide Validity
+
+Session intent:
+- review the first Unit 2 selector proofs and continue to the next prepared
+  exercise if they were sound
+
+Tutor actions:
+- inspected `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- validated the learner's three local `betterQuote` lemmas
+- scaffolded `selectBestQuote_valid_if_fallback_valid` as the next exercise
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checked after the learner proofs
+- the same command checked again after adding the next exercise, with one
+  intended `sorry` warning
+
+Learner response / behavior:
+- completed the warm-up proofs cleanly
+- should be moved to stronger recursive selector contracts rather than more
+  local Boolean simplification drills
+
+Tutor analysis:
+- proofs are correct; only minor readability improvement is to reduce
+  unnecessary case splitting when a direct selector-condition split would expose
+  the proof shape more compactly
+
+Checkpoint result:
+- local `betterQuote` validity preservation is established
+- current frontier is list-wide validity for `selectBestQuote`
+
+Next move:
+- solve `selectBestQuote_valid_if_fallback_valid` by induction on `quotes`,
+  generalizing `fallback`
+
+### 2026-04-26 - Unit 2 Scratch Scaffold
+
+Session intent:
+- correct the session workflow so the learner can work in the unit-specific
+  Lean file instead of continuing everything in global `Basic.lean`
+
+Tutor actions:
+- scaffolded Session 6 in
+  `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- introduced `Quote`, `isValidQuote`, `betterQuote`, `selectBestQuote`, and
+  three local selector lemmas with `sorry` placeholders
+- updated the checkpoint to mark Unit 2 Scratch as the active live artifact
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checks with intended `sorry` warnings
+
+Learner response / behavior:
+- clarified that the agentic book should set up each session before handoff
+- correctly recalled that per-unit Lean files are part of the intended book
+  design
+
+Tutor analysis:
+- future sessions should prepare the working file first, then give concise
+  instructions
+- `Basic.lean` should remain the historical/live reference for earlier work
+  unless a deliberate migration is requested
+
+Checkpoint result:
+- Unit 2 has started as an active Lean artifact
+- the current unsolved frontier is the local `betterQuote` theorem trio
+
+Next move:
+- learner replaces the `sorry`s in Unit 2 Scratch, then tutor reviews and
+  validates before introducing list-wide selector correctness
 
 ### 2026-04-26 - Roadmap Pivot And Tutor-System Formalization
 
