@@ -108,9 +108,42 @@ The intended shape is induction on `quotes`, with the fallback generalized
 because the recursive call changes it.
 -/
 
-theorem selectBestQuote_valid_if_fallback_valid
-  (quotes : List Quote) (fallback : Quote) :
+theorem selectBestQuote_valid_if_fallback_valid (quotes : List Quote) (fallback : Quote) :
   isValidQuote fallback -> isValidQuote (selectBestQuote quotes fallback) := by
+  induction quotes generalizing fallback with
+  | nil => simp[selectBestQuote]
+  | cons q qs ih =>
+    intro hFallbackValid
+    simp[selectBestQuote]
+    apply ih
+    exact betterQuote_valid_if_left_valid fallback q hFallbackValid
+
+/-!
+## Session 7: score monotonicity for selectors
+
+The last theorem proved that selection preserves validity if the initial
+fallback is valid. This batch adds the second half of the selector contract:
+the selected quote should not be worse than the fallback.
+
+Work in order. The first theorem is local, the second lifts it over the list,
+and the third asks you to combine the validity and score contracts.
+-/
+
+theorem betterQuote_output_ge_left
+  (a b : Quote) :
+  a.output <= (betterQuote a b).output := by
+  sorry
+
+theorem selectBestQuote_output_ge_fallback
+  (quotes : List Quote) (fallback : Quote) :
+  fallback.output <= (selectBestQuote quotes fallback).output := by
+  sorry
+
+theorem selectBestQuote_valid_and_output_ge_fallback
+  (quotes : List Quote) (fallback : Quote) :
+  isValidQuote fallback ->
+    isValidQuote (selectBestQuote quotes fallback) /\
+      fallback.output <= (selectBestQuote quotes fallback).output := by
   sorry
 
 end Unit2.SelectorKernels

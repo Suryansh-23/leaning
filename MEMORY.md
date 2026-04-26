@@ -14,7 +14,7 @@ Current unit:
 - Unit 2: Selector Kernels
 
 Current sub-unit / frontier:
-- list-wide validity for `selectBestQuote` in
+- score monotonicity for `selectBestQuote` in
   `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Last solid checkpoint:
@@ -49,7 +49,7 @@ What was verified:
 - `Leaning/Basic.lean` checks
 - the package root `Leaning` builds with the new unit module tree
 - `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks with intended
-  `sorry` placeholders for Session 6
+  `sorry` placeholders for the active Unit 2 session batch
 
 What was established:
 - the repo now has a stable book/tutor structure
@@ -60,8 +60,9 @@ What was established:
   scratch artifact
 
 Next intended move:
-- solve `selectBestQuote_valid_if_fallback_valid`, using the local
-  `betterQuote_valid_if_left_valid` theorem as the recursive step
+- solve Session 7's score-monotonicity batch:
+  `betterQuote_output_ge_left`, `selectBestQuote_output_ge_fallback`, and
+  `selectBestQuote_valid_and_output_ge_fallback`
 
 ## Stable Profile
 
@@ -83,6 +84,7 @@ Next intended move:
   - aggregates and traces
   - trace summaries
   - local quote-selector facts for `betterQuote`
+  - list-wide validity preservation for `selectBestQuote`
 - Current repo transition:
   - active learner work is moving from global `Basic.lean` into unit-specific
     scratch files
@@ -141,6 +143,41 @@ Each entry should try to capture:
 This is the durable conversation-to-progress bridge.
 
 ## Recent Observations
+
+### 2026-04-26
+
+Observation:
+- The learner wants each prepared session to contain multiple exercises, enough
+  to move faster while keeping the learning curve feasible.
+
+Why it matters:
+- Single-theorem handoffs are too slow once the learner is comfortable with the
+  local proof tools.
+
+How the tutor should adapt:
+- Prepare a small batch of related exercises per session, ordered from
+  straightforward to stretch, with a useful roundup before the handoff.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
+- The learner prefers guided hints over direct answers. The tutor gave too much
+  of the proof for `selectBestQuote_valid_if_fallback_valid`.
+
+Why it matters:
+- Full proof shapes should be delayed until the learner says they cannot bridge
+  the gap from hints.
+
+How the tutor should adapt:
+- Use the hint ladder strictly: semantic hint, goal-shape hint, tactic/tool
+  hint, partial skeleton, then full proof only on explicit request or clear
+  necessity.
+
+Status:
+- active
 
 ### 2026-04-26
 
@@ -213,6 +250,41 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-26 - Unit 2 Validity Lift And Pacing Calibration
+
+Session intent:
+- review the list-wide validity theorem and prepare a faster but feasible next
+  Unit 2 batch
+
+Tutor actions:
+- validated `selectBestQuote_valid_if_fallback_valid`
+- recorded the learner preference for multi-exercise sessions
+- recorded the learner preference for hint-first guidance instead of direct
+  proof answers
+- scaffolded Session 7 score-monotonicity exercises in Unit 2 Scratch
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checked after the learner proof
+- the same command checked after adding Session 7, with three intended `sorry`
+  warnings
+
+Learner response / behavior:
+- completed the recursive validity lift
+- explicitly asked for more exercises per session and less direct answer-giving
+
+Tutor analysis:
+- the learner can handle batched selector-contract work
+- future hints should stop short of full proof skeletons unless requested
+
+Checkpoint result:
+- list-wide validity preservation is complete
+- current frontier is score monotonicity and combining selector contracts
+
+Next move:
+- solve the three Session 7 exercises in order, using local-to-global lifting
+  again
 
 ### 2026-04-26 - Unit 2 Warm-Up Review And List-Wide Validity
 
