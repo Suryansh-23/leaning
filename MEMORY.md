@@ -147,6 +147,25 @@ This is the durable conversation-to-progress bridge.
 ### 2026-04-26
 
 Observation:
+- The learner wants completion reviews to include a score out of 10 with
+  analysis, and wants new session roundups to start with a unit progress
+  indicator.
+
+Why it matters:
+- Scored reviews make checkpoints easier to calibrate, and progress indicators
+  keep each session oriented inside the larger unit.
+
+How the tutor should adapt:
+- Use `lean-proof-review` with a score and short rationale after each completed
+  session. Use `lean-session-coach` with a short description plus approximate
+  percentage before each new session roundup.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
 - The learner asked whether the focus should be only theorem proving or also
   function/spec definition work.
 

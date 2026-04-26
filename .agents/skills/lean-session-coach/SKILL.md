@@ -58,18 +58,23 @@ Identify:
 
 Produce:
 
-1. one bounded next session
-2. why it is next
-3. why competing next branches lost
-4. a lightweight tool roundup
-5. hint policy reminders
-6. whether `MEMORY.md` should be updated after the session
+1. a unit progress indicator at the start, as both a short description and an
+   approximate percentage
+2. one bounded next session, usually with multiple related exercises once the
+   learner has shown fluency with the local tools
+3. why it is next
+4. why competing next branches lost
+5. a lightweight tool roundup
+6. hint policy reminders
+7. whether `MEMORY.md` should be updated after the session
 
 The proposed session should be:
 
 - small enough to finish or meaningfully engage in one sitting
 - clearly connected to the larger roadmap
 - not another stale variant of the same local proof pattern
+- mixed between theorem proving and definition/spec design once the unit's
+  basic vocabulary is established
 
 ## Routing Heuristics
 

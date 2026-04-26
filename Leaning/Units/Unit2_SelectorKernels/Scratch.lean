@@ -168,11 +168,21 @@ Its result should be either the original fallback or one of the input
 candidates. This is a different proof shape from score monotonicity because it
 uses list membership.
 
-This batch is larger on purpose. The first two exercises introduce membership
-facts for the local selector. The next two lift them through the recursive
-selector. The last one combines validity, score, and provenance into one
+This batch is larger on purpose. First, write one small spec predicate yourself.
+Then prove membership facts for the local selector, lift them through the
+recursive selector, and combine validity, score, and provenance into one
 high-level contract.
 -/
+
+-- Definition exercise: replace `False` with the intended membership spec.
+-- The result should say that `q` is either the fallback or one of the candidates.
+def isFromCandidates (_q _fallback : Quote) (_quotes : List Quote) : Prop :=
+  False
+
+theorem fallback_isFromCandidates
+  (fallback : Quote) (quotes : List Quote) :
+  isFromCandidates fallback fallback quotes := by
+  sorry
 
 theorem betterQuote_eq_left_or_right
   (a b : Quote) :
@@ -200,7 +210,7 @@ theorem selectBestQuote_basic_contract
   isValidQuote fallback ->
     isValidQuote (selectBestQuote quotes fallback) /\
       fallback.output <= (selectBestQuote quotes fallback).output /\
-        selectBestQuote quotes fallback ∈ fallback :: quotes := by
+        isFromCandidates (selectBestQuote quotes fallback) fallback quotes := by
   sorry
 
 end Unit2.SelectorKernels

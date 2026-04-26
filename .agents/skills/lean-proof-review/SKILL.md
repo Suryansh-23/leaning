@@ -58,9 +58,11 @@ A good review should make clear:
 
 1. exact Lean status
 2. whether the claimed checkpoint is valid
-3. the highest-priority findings
-4. what the result implies for the next session
-5. whether `MEMORY.md` should be updated
+3. a completion score out of 10 with a short analysis of correctness,
+   readability, modeling maturity, and readiness to advance
+4. the highest-priority findings
+5. what the result implies for the next session
+6. whether `MEMORY.md` should be updated
 
 ## Anti-Patterns
 
