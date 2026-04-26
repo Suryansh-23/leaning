@@ -14,7 +14,7 @@ Current unit:
 - Unit 2: Selector Kernels
 
 Current sub-unit / frontier:
-- score monotonicity for `selectBestQuote` in
+- provenance and candidate membership for `selectBestQuote` in
   `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Last solid checkpoint:
@@ -60,9 +60,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- solve Session 7's score-monotonicity batch:
-  `betterQuote_output_ge_left`, `selectBestQuote_output_ge_fallback`, and
-  `selectBestQuote_valid_and_output_ge_fallback`
+- solve Session 8's provenance/membership batch, then move toward global
+  optimality rather than repeating local selector preservation lemmas
 
 ## Stable Profile
 
@@ -85,6 +84,7 @@ Next intended move:
   - trace summaries
   - local quote-selector facts for `betterQuote`
   - list-wide validity preservation for `selectBestQuote`
+  - score monotonicity and combined validity/output contract
 - Current repo transition:
   - active learner work is moving from global `Basic.lean` into unit-specific
     scratch files
@@ -143,6 +143,41 @@ Each entry should try to capture:
 This is the durable conversation-to-progress bridge.
 
 ## Recent Observations
+
+### 2026-04-26
+
+Observation:
+- The learner asked whether the focus should be only theorem proving or also
+  function/spec definition work.
+
+Why it matters:
+- The book should train formal modeling, not just filling proofs after the
+  tutor supplies every definition.
+
+How the tutor should adapt:
+- Include definition-design exercises once a unit's basic vocabulary is in
+  place: ask the learner to write small executable functions, spec predicates,
+  and theorem statements before proving them.
+
+Status:
+- active
+
+### 2026-04-26
+
+Observation:
+- The learner wants the tutor to move fast after enough practice has been
+  demonstrated and avoid circling around the same concept.
+
+Why it matters:
+- Repetition should stop once the tutor has evidence that the proof pattern is
+  usable; the book should advance to a new proof shape or stronger contract.
+
+How the tutor should adapt:
+- Treat repeated success as a signal to increase scope, introduce the next
+  concept family, or branch forward, rather than adding near-duplicate drills.
+
+Status:
+- active
 
 ### 2026-04-26
 
@@ -250,6 +285,46 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-26 - Unit 2 Score Contracts And Provenance Setup
+
+Session intent:
+- review the score-monotonicity batch and prepare the next faster-moving Unit 2
+  session
+
+Tutor actions:
+- validated Session 7 score-monotonicity proofs
+- rewrote the combined contract proof into an explicit conjunction structure
+  for readability
+- recorded the learner preference to avoid repeated concept circling after
+  demonstrated competence
+- scaffolded Session 8 provenance and membership exercises
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checked before scaffolding
+- the same command checked after scaffolding, with five intended `sorry`
+  warnings
+
+Learner response / behavior:
+- completed the local and recursive score contracts
+- asked for more exercises and faster advancement through already-practiced
+  concepts
+
+Tutor analysis:
+- selector validity and fallback-score monotonicity are now sufficiently
+  practiced
+- next session should change proof shape to membership/provenance, not add more
+  preservation variants
+
+Checkpoint result:
+- Unit 2 now has validity, output monotonicity, and a combined basic selector
+  contract over the fallback
+- current frontier is proving selector provenance over list membership
+
+Next move:
+- solve Session 8's five provenance exercises, then proceed toward global
+  optimality over valid candidates
 
 ### 2026-04-26 - Unit 2 Validity Lift And Pacing Calibration
 

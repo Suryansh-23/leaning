@@ -64,23 +64,18 @@ The point of this session is to get comfortable proving contracts about one
 selector step.
 -/
 
-theorem betterQuote_keeps_left_when_right_invalid
-  (a b : Quote) :
+theorem betterQuote_keeps_left_when_right_invalid (a b : Quote) :
   b.valid = false -> betterQuote a b = a := by
   intro hBNotValid
   simp[hBNotValid, betterQuote]
 
 
-theorem betterQuote_takes_right_when_valid_and_not_worse
-  (a b : Quote) :
-  b.valid = true ->
-  a.output <= b.output ->
-  betterQuote a b = b := by
+theorem betterQuote_takes_right_when_valid_and_not_worse (a b : Quote) :
+  b.valid = true -> a.output <= b.output -> betterQuote a b = b := by
   intro hBValid hBBetterOutput
   simp[hBValid, hBBetterOutput, betterQuote]
 
-theorem betterQuote_valid_if_left_valid
-  (a b : Quote) :
+theorem betterQuote_valid_if_left_valid (a b : Quote) :
   isValidQuote a -> isValidQuote (betterQuote a b) := by
   intro hAValid
   by_cases hBValid: b.valid = true
@@ -129,21 +124,83 @@ Work in order. The first theorem is local, the second lifts it over the list,
 and the third asks you to combine the validity and score contracts.
 -/
 
-theorem betterQuote_output_ge_left
-  (a b : Quote) :
+theorem betterQuote_output_ge_left (a b : Quote) :
   a.output <= (betterQuote a b).output := by
-  sorry
+  simp[betterQuote]
+  by_cases h1: a.output <= b.output
+  . simp[h1]
+    by_cases h2: b.valid = true
+    . simp[h1, h2]
+    . simp[h2]
+  . simp[h1]
 
-theorem selectBestQuote_output_ge_fallback
-  (quotes : List Quote) (fallback : Quote) :
+
+theorem selectBestQuote_output_ge_fallback (quotes : List Quote) (fallback : Quote) :
   fallback.output <= (selectBestQuote quotes fallback).output := by
-  sorry
+  induction quotes generalizing fallback with
+  | nil => simp[selectBestQuote]
+  | cons q qs ih =>
+    simp[selectBestQuote] at |-
+    have hStep := betterQuote_output_ge_left fallback q
+    have hTail := ih (betterQuote fallback q)
+    exact Nat.le_trans hStep hTail
 
-theorem selectBestQuote_valid_and_output_ge_fallback
-  (quotes : List Quote) (fallback : Quote) :
+
+theorem selectBestQuote_valid_and_output_ge_fallback (quotes : List Quote) (fallback : Quote) :
   isValidQuote fallback ->
     isValidQuote (selectBestQuote quotes fallback) /\
       fallback.output <= (selectBestQuote quotes fallback).output := by
+  intro hFallbackValid
+  constructor
+  · exact selectBestQuote_valid_if_fallback_valid quotes fallback hFallbackValid
+  · exact selectBestQuote_output_ge_fallback quotes fallback
+
+/-!
+## Session 8: provenance and candidate membership
+
+You now have two selector guarantees:
+
+- validity is preserved from a valid fallback
+- output is not worse than the fallback
+
+The next contract family is provenance: the selector should not invent a quote.
+Its result should be either the original fallback or one of the input
+candidates. This is a different proof shape from score monotonicity because it
+uses list membership.
+
+This batch is larger on purpose. The first two exercises introduce membership
+facts for the local selector. The next two lift them through the recursive
+selector. The last one combines validity, score, and provenance into one
+high-level contract.
+-/
+
+theorem betterQuote_eq_left_or_right
+  (a b : Quote) :
+  betterQuote a b = a \/ betterQuote a b = b := by
+  sorry
+
+theorem betterQuote_mem_pair
+  (a b : Quote) :
+  betterQuote a b ∈ [a, b] := by
+  sorry
+
+theorem selectBestQuote_eq_fallback_or_mem
+  (quotes : List Quote) (fallback : Quote) :
+  selectBestQuote quotes fallback = fallback \/
+    selectBestQuote quotes fallback ∈ quotes := by
+  sorry
+
+theorem selectBestQuote_mem_fallback_cons
+  (quotes : List Quote) (fallback : Quote) :
+  selectBestQuote quotes fallback ∈ fallback :: quotes := by
+  sorry
+
+theorem selectBestQuote_basic_contract
+  (quotes : List Quote) (fallback : Quote) :
+  isValidQuote fallback ->
+    isValidQuote (selectBestQuote quotes fallback) /\
+      fallback.output <= (selectBestQuote quotes fallback).output /\
+        selectBestQuote quotes fallback ∈ fallback :: quotes := by
   sorry
 
 end Unit2.SelectorKernels
