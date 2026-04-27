@@ -11,22 +11,22 @@ When the tutor needs to know "where are we?", start here before inferring from
 the rest of the repo.
 
 Current unit:
-- Unit 3: Strategic Games and Mechanisms (starting next)
+- Unit 3: Strategic Games and Mechanisms
 
 Current sub-unit / frontier:
-- Unit 2 is complete and migrated; ready to open Unit 3
+- Session 11 dominance and best-response predicates in
+  `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 
 Last solid checkpoint:
 - Unit 2 fully closed out: all sessions 6–10 proved in Scratch.lean,
   migrated verbatim into Core.lean, both files check clean
 
 Current live artifact:
-- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` (not yet
-  scaffolded — next session opens it)
+- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 
 Current curated migration status:
 - Unit 2 Core.lean fully populated with all stable theorems
-- Unit 3 Scratch.lean is the next file to scaffold
+- Unit 3 Scratch.lean is scaffolded for Session 11
 
 Ready to branch into:
 - Unit 3: Strategic Games and Mechanisms
@@ -47,8 +47,8 @@ Date:
 What was verified:
 - `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks clean (no sorry, no errors)
 - `Leaning/Units/Unit2_SelectorKernels/Core.lean` checks clean
-- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks with intended
-  `sorry` placeholders for the active Unit 2 session batch
+- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` checks with
+  intended `sorry` placeholders for Session 11
 
 What was established:
 - the repo now has a stable book/tutor structure
@@ -59,8 +59,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- run a short Unit 2 closeout session for tie behavior/determinism, then migrate
-  stable selector material into `Core.lean`
+- complete Session 11 in Unit 3 without overteaching game-theory basics; focus
+  on Lean proof shape and spec design
 
 ## Stable Profile
 
@@ -75,7 +75,7 @@ Next intended move:
 
 ## Current Frontier
 
-- Active live file: `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- Active live file: `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 - Covered so far:
   - tiny state models
   - guarded transitions
@@ -86,9 +86,14 @@ Next intended move:
   - score monotonicity and combined validity/output contract
   - provenance and candidate membership for `selectBestQuote`
   - global optimality over valid allowed candidates
+- Current Unit 3 surface:
+  - finite two-player normal-form game model
+  - weak dominance and best-response specs are the active learner-authored
+    definitions
+  - first theorem family is dominance reflexivity/transitivity and dominant
+    strategy implies best response
 - Current repo transition:
-  - active learner work is moving from global `Basic.lean` into unit-specific
-    scratch files
+  - active learner work is now in Unit 3 Scratch after Unit 2 migration
 
 ## Concept State
 
@@ -144,6 +149,25 @@ Each entry should try to capture:
 This is the durable conversation-to-progress bridge.
 
 ## Recent Observations
+
+### 2026-04-27
+
+Observation:
+- The learner has undergrad-level game theory background and does not need
+  basic game-theory concepts overexplained in Unit 3.
+
+Why it matters:
+- Unit 3 roundups should focus on Lean modeling/proof tools, theorem-shape
+  decisions, and mechanism/formalization tradeoffs, not textbook explanations
+  of dominance or best response.
+
+How the tutor should adapt:
+- Assume game-theory concepts like dominance, best response, and normal-form
+  games are familiar. Spend teaching budget on bounded quantifiers, spec
+  design, `omega`, decidable examples, and proof structure.
+
+Status:
+- active
 
 ### 2026-04-27
 
@@ -378,6 +402,43 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 3 Session 11 Scaffold Audit
+
+Session intent:
+- inspect repo state after another agent completed Unit 2 closeout and
+  scaffolded Unit 3 Session 11
+
+Tutor actions:
+- inspected changed worktree state, AGENTS, MEMORY, README, Unit 2 Core/Scratch,
+  and Unit 3 Scratch/Core/README
+- validated Unit 2 Core and Scratch
+- validated Unit 3 Scratch with intended Session 11 `sorry` placeholders
+- ran a focused prerequisite/scaffold audit via subagent
+- updated memory to match the live Unit 3 scaffold and learner game-theory
+  background
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Core.lean`
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- `~/.elan/bin/lake env lean Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+
+Learner response / behavior:
+- reported Session 10 complete and Session 11 scaffolded by another agent
+- clarified that standard undergrad game theory should be assumed
+
+Tutor analysis:
+- Session 11 scaffold fits Unit 3 and the learner profile; no scaffold patch is
+  required before starting
+- the main risk is Lean notation density, not game-theory domain overload
+
+Checkpoint result:
+- Unit 3 is active and scaffolded for dominance/best-response work
+
+Next move:
+- hand off Session 11 with a prerequisite roundup centered on bounded
+  quantifiers, conjunction specs, quantified-hypothesis application, `omega`,
+  and `native_decide`
 
 ### 2026-04-27 - Unit 2 Closeout And Migration Complete
 
