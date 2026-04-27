@@ -14,7 +14,7 @@ Current unit:
 - Unit 3: Strategic Games and Mechanisms
 
 Current sub-unit / frontier:
-- Session 12 concrete finite examples / executable checks after Session 11 in
+- Session 12 concrete finite examples and executable Bool checks in
   `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 
 Last solid checkpoint:
@@ -26,7 +26,7 @@ Current live artifact:
 
 Current curated migration status:
 - Unit 2 Core.lean fully populated with all stable theorems
-- Unit 3 Scratch.lean is scaffolded for Session 11
+- Unit 3 Scratch.lean is scaffolded for Session 12
 
 Ready to branch into:
 - Unit 3: Strategic Games and Mechanisms
@@ -58,8 +58,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- scaffold Session 12 around concrete finite game examples and/or executable
-  Bool checkers for dominance/best response
+- complete Session 12: concrete Prisoner's Dilemma Prop proofs, executable Bool
+  dominance/best-response checkers, and `#eval` sanity checks
 
 ## Stable Profile
 
@@ -400,6 +400,40 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 3 Session 12 Scaffold
+
+Session intent:
+- scaffold the next Unit 3 session after dominance/best-response basics
+
+Tutor actions:
+- read current Unit 3 Scratch and memory checkpoint
+- ran a focused prerequisite/scaffold audit via subagent
+- scaffolded Session 12 around concrete Prisoner's Dilemma Prop examples,
+  executable Bool dominance/best-response checkers, and `#eval` sanity checks
+- deferred generic Bool-to-Prop soundness to a later session to avoid API
+  overload
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+  checks with intended `sorry` warnings for Session 12
+- current `#eval` outputs are `false` because the Bool checker definitions are
+  placeholders
+
+Learner response / behavior:
+- asked to continue immediately after Session 11
+
+Tutor analysis:
+- the scaffold fits the clarified faster-session policy: it covers a coherent
+  computation bridge rather than adding abstract dominance variants
+- prerequisite audit flagged generic reflection/soundness as too much for this
+  session
+
+Checkpoint result:
+- Unit 3 Session 12 is ready for learner work
+
+Next move:
+- complete concrete finite examples and implement executable Bool checkers
 
 ### 2026-04-27 - Unit 3 Session 11 Complete
 

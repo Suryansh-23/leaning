@@ -122,4 +122,79 @@ def prisonersDilemma : TwoPlayerGame := {
 -- splitting membership in `[0, 1]`, or introduce a separate executable Bool
 -- checker later if we want computation-first examples.
 
+/-!
+## Session 12: finite examples and executable checks
+
+Session 11 gave us Prop-shaped game specs. This session bridges those specs to
+small concrete games.
+
+First, prove a couple of Prisoner's Dilemma facts directly by finite-list case
+splitting. Then write executable Bool checkers for payoff comparison over a
+finite action list and inspect them with `#eval`.
+
+Generic Bool-to-Prop soundness is intentionally deferred to Session 13; this
+session is about building the executable surface and sanity-checking it on a
+small concrete game.
+-/
+
+-- Exercise 1.
+-- Defect weakly dominates cooperate for player 1 in the concrete game.
+theorem prisonersDilemma_defect_weaklyDominates_cooperate :
+  weaklyDominates prisonersDilemma 1 0 := by
+  sorry
+
+-- Exercise 2.
+-- Defect is a best response to cooperate.
+theorem prisonersDilemma_defect_bestResponse_to_cooperate :
+  isBestResponse1 prisonersDilemma 1 0 := by
+  sorry
+
+-- Exercise 3.
+-- Defect is a best response to defect.
+theorem prisonersDilemma_defect_bestResponse_to_defect :
+  isBestResponse1 prisonersDilemma 1 1 := by
+  sorry
+
+-- Exercise 4.
+-- Executable checker: all actions in `opponentActions` satisfy the payoff
+-- comparison for player 1.
+def weaklyDominatesBool
+    (_g : TwoPlayerGame) (_opponentActions : List Nat) (_a _b : Nat) : Bool :=
+  false
+
+-- Exercise 5.
+-- Executable checker: `a1` is an available action, `a2` is an available
+-- opponent action, and no available player-1 action beats `a1` against `a2`.
+def isBestResponse1Bool
+    (_g : TwoPlayerGame) (_a1 _a2 : Nat) : Bool :=
+  false
+
+-- Exercise 6.
+-- The executable dominance checker succeeds on the Prisoner's Dilemma example.
+theorem prisonersDilemma_defect_weaklyDominates_cooperate_bool :
+  weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 1 0 = true := by
+  sorry
+
+-- Exercise 7.
+-- The executable dominance checker rejects the reverse dominance claim.
+theorem prisonersDilemma_cooperate_not_weaklyDominates_defect_bool :
+  weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 0 1 = false := by
+  sorry
+
+-- Exercise 8.
+-- The executable best-response checker succeeds on both opponent actions.
+theorem prisonersDilemma_defect_bestResponse_to_cooperate_bool :
+  isBestResponse1Bool prisonersDilemma 1 0 = true := by
+  sorry
+
+theorem prisonersDilemma_defect_bestResponse_to_defect_bool :
+  isBestResponse1Bool prisonersDilemma 1 1 = true := by
+  sorry
+
+-- Use these while developing the Bool definitions.
+#eval weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 1 0
+#eval weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 0 1
+#eval isBestResponse1Bool prisonersDilemma 1 0
+#eval isBestResponse1Bool prisonersDilemma 1 1
+
 end Unit3.StrategicGames
