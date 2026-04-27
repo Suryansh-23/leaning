@@ -14,7 +14,7 @@ Current unit:
 - Unit 3: Strategic Games and Mechanisms
 
 Current sub-unit / frontier:
-- Session 11 dominance and best-response predicates in
+- Session 12 concrete finite examples / executable checks after Session 11 in
   `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 
 Last solid checkpoint:
@@ -47,8 +47,7 @@ Date:
 What was verified:
 - `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks clean (no sorry, no errors)
 - `Leaning/Units/Unit2_SelectorKernels/Core.lean` checks clean
-- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` checks with
-  intended `sorry` placeholders for Session 11
+- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` checks clean
 
 What was established:
 - the repo now has a stable book/tutor structure
@@ -59,8 +58,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- complete Session 11 in Unit 3 without overteaching game-theory basics; focus
-  on Lean proof shape and spec design
+- scaffold Session 12 around concrete finite game examples and/or executable
+  Bool checkers for dominance/best response
 
 ## Stable Profile
 
@@ -88,10 +87,9 @@ Next intended move:
   - global optimality over valid allowed candidates
 - Current Unit 3 surface:
   - finite two-player normal-form game model
-  - weak dominance and best-response specs are the active learner-authored
-    definitions
-  - first theorem family is dominance reflexivity/transitivity and dominant
-    strategy implies best response
+  - weak dominance and best-response specs
+  - dominance reflexivity/transitivity and dominant strategy implies best
+    response
 - Current repo transition:
   - active learner work is now in Unit 3 Scratch after Unit 2 migration
 
@@ -402,6 +400,45 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 3 Session 11 Complete
+
+Session intent:
+- review completed Unit 3 dominance and best-response scaffold
+
+Tutor actions:
+- inspected the completed Session 11 proofs
+- validated Unit 3 Scratch
+- tested the scaffold's commented `native_decide` examples separately and found
+  they do not work with the current Prop-shaped bounded universal definitions
+- corrected the scaffold comment to describe finite-list proof or later
+  executable Bool checkers instead of misleading `native_decide` examples
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+  checks clean
+- ad hoc stdin check confirmed the commented `native_decide` examples fail to
+  synthesize `Decidable`, so the comment was corrected
+
+Learner response / behavior:
+- completed Session 11 after needing one direct walkthrough for the bundled
+  best-response theorem
+
+Tutor analysis:
+- Session 11 score: 8/10. Definitions and theorem statements are solid, and
+  the main proof family checks. The key improvement is proof readability:
+  `dominantStrategy_isBestResponse` currently closes the optimality branch with
+  `simp_all!`; an explicit `intro a1' hMemAlt` plus applying `hDom` would show
+  the intended quantifier-instantiation pattern better.
+
+Checkpoint result:
+- Unit 3 now has the basic normal-form game model plus weak dominance,
+  best-response, dominance reflexivity/transitivity, and dominant-strategy
+  implies best-response
+
+Next move:
+- choose between concrete finite game proofs for Prisoner's Dilemma or adding
+  executable Bool checkers before moving deeper into mechanisms
 
 ### 2026-04-27 - Unit 3 Session 11 Scaffold Audit
 

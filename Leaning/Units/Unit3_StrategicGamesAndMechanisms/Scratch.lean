@@ -11,7 +11,7 @@ New proof shapes in this unit:
 - universally quantified strategy comparisons (`∀ a2 ∈ actions2, u a2 ≤ v a2`)
 - dominance transitivity via `omega` on `Int`
 - dominant → best response by instantiation
-- concrete decidable game instances with `native_decide`
+- concrete finite game examples by splitting list membership cases
 -/
 
 namespace Unit3.StrategicGames
@@ -35,20 +35,20 @@ You know what these mean from game theory. Write the Lean definitions.
 -- for every opponent action in `g.actions2`, playing `a` yields at least as
 -- much utility as playing `b`.
 def weaklyDominates (g : TwoPlayerGame) (a b : Nat) : Prop :=
-  sorry
+  ∀ a2 ∈ g.actions2, g.u1 a a2 >= g.u1 b a2
 
 -- Exercise 2.
 -- `a1` is a best response to `a2` for player 1:
 -- `a1` is in the action set and no available alternative does strictly better
 -- against `a2`.
 def isBestResponse1 (g : TwoPlayerGame) (a1 a2 : Nat) : Prop :=
-  sorry
+  a1 ∈ g.actions1 /\ a2 ∈ g.actions2 /\ ∀ a1' ∈ g.actions1, g.u1 a1 a2 >= g.u1 a1' a2
 
 -- Exercise 3.
 -- Weak dominance is reflexive.
 theorem weaklyDominates_refl (g : TwoPlayerGame) (a : Nat) :
-    weaklyDominates g a a := by
-  sorry
+  weaklyDominates g a a := by
+  simp[weaklyDominates]
 
 -- Exercise 4.
 -- Weak dominance is transitive.
@@ -57,8 +57,13 @@ theorem weaklyDominates_refl (g : TwoPlayerGame) (a : Nat) :
 -- New tool: `omega` closes linear arithmetic goals on `Int` (and `Nat`)
 -- directly from hypotheses, no lemma names needed.
 theorem weaklyDominates_trans (g : TwoPlayerGame) (a b c : Nat) :
-    weaklyDominates g a b → weaklyDominates g b c → weaklyDominates g a c := by
-  sorry
+  weaklyDominates g a b → weaklyDominates g b c → weaklyDominates g a c := by
+  intro h1 h2 someA2 hMem
+  have h1 := h1 someA2
+  have h2 := h2 someA2
+  simp[hMem] at h1
+  simp[hMem] at h2
+  omega
 
 -- Exercise 5.
 -- A weakly dominant strategy is a best response against any opponent action.
@@ -74,7 +79,13 @@ theorem dominantStrategy_isBestResponse (g : TwoPlayerGame)
     (hMem2 : a2 ∈ g.actions2)
     (hDom : ∀ a1' ∈ g.actions1, weaklyDominates g a1 a1') :
     isBestResponse1 g a1 a2 := by
-  sorry
+  simp[weaklyDominates] at hDom
+  simp[isBestResponse1]
+  constructor
+  · exact hMem1
+  · constructor
+    · exact hMem2
+    · simp_all![isBestResponse1, hMem1, hMem2]
 
 /-!
 ### Concrete example: Prisoner's Dilemma
@@ -105,11 +116,10 @@ def prisonersDilemma : TwoPlayerGame := {
     else 1
 }
 
--- Once you have written `weaklyDominates`, uncomment and run these.
--- Defect weakly dominates Cooperate for player 1:
--- example : weaklyDominates prisonersDilemma 1 0 := by native_decide
--- Defect is a best response to any opponent action:
--- example : isBestResponse1 prisonersDilemma 1 0 := by native_decide
--- example : isBestResponse1 prisonersDilemma 1 1 := by native_decide
+-- Concrete finite examples are next. With the current Prop-shaped definitions,
+-- `native_decide` does not synthesize a decision procedure for the bounded
+-- universal quantifier directly; prove these by unfolding the definitions and
+-- splitting membership in `[0, 1]`, or introduce a separate executable Bool
+-- checker later if we want computation-first examples.
 
 end Unit3.StrategicGames
