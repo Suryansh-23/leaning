@@ -254,46 +254,75 @@ the result over list membership.
 
 -- Definition exercise: replace `False` with the intended dominance spec.
 -- It should mean: every valid `candidate` has output no greater than `selected`.
-def dominatesValidCandidate (_selected _candidate : Quote) : Prop :=
-  False
+def dominatesValidCandidate (selected candidate : Quote) : Prop :=
+  isValidQuote candidate -> candidate.output <= selected.output
 
-theorem betterQuote_dominates_right
-  (a b : Quote) :
+theorem betterQuote_dominates_right (a b : Quote) :
   dominatesValidCandidate (betterQuote a b) b := by
-  sorry
+  simp[dominatesValidCandidate, isValidQuote]
+  intro hBValid
+  simp[betterQuote]
+  simp[hBValid] at |-
+  by_cases h: a.output <= b.output
+  . simp[h]
+  . simp[h]
+    exact Nat.le_of_not_le h
 
-theorem selectBestQuote_preserves_dominance
-  (quotes : List Quote) (selected candidate : Quote) :
+theorem selectBestQuote_preserves_dominance (quotes : List Quote) (selected candidate : Quote) :
   dominatesValidCandidate selected candidate ->
     dominatesValidCandidate (selectBestQuote quotes selected) candidate := by
-  sorry
+  simp[dominatesValidCandidate]
+  intro ih
+  intro hValid
+  have hSOGF := selectBestQuote_output_ge_fallback quotes selected
+  have hOut := ih hValid
+  exact Nat.le_trans hOut hSOGF
 
-theorem selectBestQuote_dominates_member
-  (quotes : List Quote) (fallback candidate : Quote) :
+theorem selectBestQuote_dominates_member (quotes : List Quote) (fallback candidate : Quote) :
   candidate ∈ quotes ->
     dominatesValidCandidate (selectBestQuote quotes fallback) candidate := by
-  sorry
+  induction quotes generalizing fallback with
+  | nil => simp[selectBestQuote]
+  | cons q qs ih =>
+    intro hMem
+    simp at hMem
+    rcases hMem with hHead | hTail
+    . simp[selectBestQuote]
+      simp[hHead, betterQuote_dominates_right fallback q, selectBestQuote_preserves_dominance qs (betterQuote fallback q) q]
+    . simp[selectBestQuote]
+      have h := ih (betterQuote fallback q)
+      simp[hTail, h]
 
-theorem selectBestQuote_dominates_fallback
-  (quotes : List Quote) (fallback : Quote) :
+theorem selectBestQuote_dominates_fallback (quotes : List Quote) (fallback : Quote) :
   dominatesValidCandidate (selectBestQuote quotes fallback) fallback := by
-  sorry
+  simp[dominatesValidCandidate]
+  intro hFValid
+  exact selectBestQuote_output_ge_fallback quotes fallback
 
-theorem selectBestQuote_optimal_for_allowed_candidates
-  (quotes : List Quote) (fallback candidate : Quote) :
+theorem selectBestQuote_optimal_for_allowed_candidates (quotes : List Quote) (fallback candidate : Quote) :
   candidate ∈ fallback :: quotes ->
     dominatesValidCandidate (selectBestQuote quotes fallback) candidate := by
-  sorry
+  intro hMem
+  simp at hMem
+  rcases hMem with hIsFallback | hInQuotes
+  . simp[hIsFallback] at |-
+    exact selectBestQuote_dominates_fallback quotes fallback
+  . simp[hInQuotes, selectBestQuote_dominates_member quotes fallback candidate]
 
-theorem selectBestQuote_full_contract
-  (quotes : List Quote) (fallback : Quote) :
+
+theorem selectBestQuote_full_contract (quotes : List Quote) (fallback : Quote) :
   isValidQuote fallback ->
     isValidQuote (selectBestQuote quotes fallback) /\
       isFromCandidates (selectBestQuote quotes fallback) fallback quotes /\
         ∀ candidate,
           candidate ∈ fallback :: quotes ->
             dominatesValidCandidate (selectBestQuote quotes fallback) candidate := by
-  sorry
-
+  intro hFallbackValid
+  constructor
+  . simp[hFallbackValid, selectBestQuote_valid_if_fallback_valid quotes fallback]
+  . constructor
+    . simpa [isFromCandidates] using
+        selectBestQuote_eq_fallback_or_mem quotes fallback
+    . exact selectBestQuote_optimal_for_allowed_candidates quotes fallback
 
 end Unit2.SelectorKernels

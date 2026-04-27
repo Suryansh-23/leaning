@@ -14,7 +14,7 @@ Current unit:
 - Unit 2: Selector Kernels
 
 Current sub-unit / frontier:
-- global optimality over valid candidates for `selectBestQuote` in
+- Unit 2 closeout: tie behavior and curated migration after global optimality in
   `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
 
 Last solid checkpoint:
@@ -60,8 +60,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- solve Session 9's global optimality batch, focusing on validity-conditioned
-  dominance over allowed candidates
+- run a short Unit 2 closeout session for tie behavior/determinism, then migrate
+  stable selector material into `Core.lean`
 
 ## Stable Profile
 
@@ -86,6 +86,7 @@ Next intended move:
   - list-wide validity preservation for `selectBestQuote`
   - score monotonicity and combined validity/output contract
   - provenance and candidate membership for `selectBestQuote`
+  - global optimality over valid allowed candidates
 - Current repo transition:
   - active learner work is moving from global `Basic.lean` into unit-specific
     scratch files
@@ -144,6 +145,24 @@ Each entry should try to capture:
 This is the durable conversation-to-progress bridge.
 
 ## Recent Observations
+
+### 2026-04-27
+
+Observation:
+- The learner wants hints broken into smaller staged steps; a direct full proof
+  shape for `selectBestQuote_optimal_for_allowed_candidates` was too large.
+
+Why it matters:
+- Even when avoiding full solutions, giving the whole branch plan can remove
+  too much of the problem-solving work.
+
+How the tutor should adapt:
+- For stuck-proof help, give only the next one or two moves first. Wait for the
+  learner to ask before escalating to branch structure, theorem selection, or
+  skeletons.
+
+Status:
+- active
 
 ### 2026-04-26
 
@@ -360,6 +379,40 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 2 Global Optimality Complete
+
+Session intent:
+- review Session 9 global optimality work and decide whether Unit 2 is ready
+  for closeout
+
+Tutor actions:
+- inspected the completed global optimality proofs
+- validated `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- adjusted `dominatesValidCandidate` to use `isValidQuote` rather than raw
+  `candidate.valid`, preserving the established executable/spec boundary
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+  checks cleanly
+
+Learner response / behavior:
+- completed the global optimality batch after staged hints around membership,
+  implication use, and theorem composition
+
+Tutor analysis:
+- Session 9 completion score: 8.5/10. The core theorem family is correct and
+  meaningfully advances Unit 2. The remaining growth point is proof
+  readability: several proofs lean on `simp[...]` with large theorem arguments,
+  which checks but can hide the intended branch structure.
+
+Checkpoint result:
+- Unit 2 now has validity, score monotonicity, provenance, and global
+  validity-conditioned optimality for allowed candidates
+
+Next move:
+- complete a short Unit 2 closeout on tie behavior/determinism, then migrate
+  stable material from Scratch to Core
 
 ### 2026-04-26 - Unit 2 Provenance Complete And Optimality Setup
 
