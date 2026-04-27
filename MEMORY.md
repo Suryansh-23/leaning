@@ -14,7 +14,7 @@ Current unit:
 - Unit 3: Strategic Games and Mechanisms
 
 Current sub-unit / frontier:
-- Session 12 concrete finite examples and executable Bool checks in
+- Session 13 direct mechanisms and truthful bidding in
   `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
 
 Last solid checkpoint:
@@ -58,8 +58,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- complete Session 12: concrete Prisoner's Dilemma Prop proofs, executable Bool
-  dominance/best-response checkers, and `#eval` sanity checks
+- complete Session 13: toy second-price auction utility and truthful-reporting
+  dominance
 
 ## Stable Profile
 
@@ -90,6 +90,8 @@ Next intended move:
   - weak dominance and best-response specs
   - dominance reflexivity/transitivity and dominant strategy implies best
     response
+  - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
+  - direct second-price auction mechanism scaffold
 - Current repo transition:
   - active learner work is now in Unit 3 Scratch after Unit 2 migration
 
@@ -400,6 +402,41 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 3 Session 12 Complete And Mechanism Fast-Track
+
+Session intent:
+- review completed finite examples / executable checks and fast-track Unit 3 to
+  more relevant mechanism-design content
+
+Tutor actions:
+- inspected completed Session 12 in Unit 3 Scratch
+- validated Unit 3 Scratch
+- scaffolded Session 13 around a toy direct-revelation second-price auction,
+  utility, and truthful-reporting dominance
+- added a `Decidable` instance for the `winsSecondPrice` Prop wrapper so it can
+  be used in executable utility definitions
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+  checks with five intended Session 13 `sorry` placeholders
+
+Learner response / behavior:
+- completed Session 12 easily and asked to move into tougher, more interesting
+  problems that fit the roadmap
+
+Tutor analysis:
+- Session 12 score: 9/10. The work is correct and quick; difficulty was too
+  low for the learner's current pace. Future Unit 3 sessions should connect
+  normal-form reasoning to mechanisms, auctions, dynamic fees, and later market
+  mechanisms rather than spending more time on textbook examples.
+
+Checkpoint result:
+- Unit 3 now has concrete finite-game examples and executable Bool checks
+
+Next move:
+- solve Session 13's second-price auction dominance theorem family, with focus
+  on case splits over allocation/payment and Nat-to-Int arithmetic
 
 ### 2026-04-27 - Unit 3 Session 12 Scaffold
 

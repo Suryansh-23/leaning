@@ -141,60 +141,146 @@ small concrete game.
 -- Defect weakly dominates cooperate for player 1 in the concrete game.
 theorem prisonersDilemma_defect_weaklyDominates_cooperate :
   weaklyDominates prisonersDilemma 1 0 := by
-  sorry
+  simp[prisonersDilemma, weaklyDominates]
 
 -- Exercise 2.
 -- Defect is a best response to cooperate.
 theorem prisonersDilemma_defect_bestResponse_to_cooperate :
   isBestResponse1 prisonersDilemma 1 0 := by
-  sorry
+  simp[prisonersDilemma, isBestResponse1]
 
 -- Exercise 3.
 -- Defect is a best response to defect.
 theorem prisonersDilemma_defect_bestResponse_to_defect :
   isBestResponse1 prisonersDilemma 1 1 := by
-  sorry
+  simp[prisonersDilemma, isBestResponse1]
 
 -- Exercise 4.
 -- Executable checker: all actions in `opponentActions` satisfy the payoff
 -- comparison for player 1.
 def weaklyDominatesBool
-    (_g : TwoPlayerGame) (_opponentActions : List Nat) (_a _b : Nat) : Bool :=
-  false
+    (g : TwoPlayerGame) (opponentActions : List Nat) (a b : Nat) : Bool :=
+  opponentActions.all fun a2 => g.u1 a a2 >= g.u1 b a2
 
 -- Exercise 5.
 -- Executable checker: `a1` is an available action, `a2` is an available
 -- opponent action, and no available player-1 action beats `a1` against `a2`.
-def isBestResponse1Bool
-    (_g : TwoPlayerGame) (_a1 _a2 : Nat) : Bool :=
-  false
+def isBestResponse1Bool (g : TwoPlayerGame) (a1 a2 : Nat) : Bool :=
+  a1 ∈ g.actions1 ∧ a2 ∈ g.actions2 ∧ ∀ a1' ∈ g.actions1, g.u1 a1' a2 <= g.u1 a1 a2
 
 -- Exercise 6.
 -- The executable dominance checker succeeds on the Prisoner's Dilemma example.
 theorem prisonersDilemma_defect_weaklyDominates_cooperate_bool :
   weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 1 0 = true := by
-  sorry
+  simp[prisonersDilemma, weaklyDominatesBool]
 
 -- Exercise 7.
 -- The executable dominance checker rejects the reverse dominance claim.
 theorem prisonersDilemma_cooperate_not_weaklyDominates_defect_bool :
   weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 0 1 = false := by
-  sorry
+  simp[prisonersDilemma, weaklyDominatesBool]
 
 -- Exercise 8.
 -- The executable best-response checker succeeds on both opponent actions.
 theorem prisonersDilemma_defect_bestResponse_to_cooperate_bool :
   isBestResponse1Bool prisonersDilemma 1 0 = true := by
-  sorry
+  simp[prisonersDilemma, isBestResponse1Bool]
 
 theorem prisonersDilemma_defect_bestResponse_to_defect_bool :
   isBestResponse1Bool prisonersDilemma 1 1 = true := by
-  sorry
+  simp[prisonersDilemma, isBestResponse1Bool]
 
 -- Use these while developing the Bool definitions.
 #eval weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 1 0
 #eval weaklyDominatesBool prisonersDilemma prisonersDilemma.actions2 0 1
 #eval isBestResponse1Bool prisonersDilemma 1 0
 #eval isBestResponse1Bool prisonersDilemma 1 1
+
+/-!
+## Session 13: direct mechanisms and truthful bidding
+
+Session 12 stayed close to normal-form examples. This session moves toward the
+mechanism-design part of the roadmap: reports, allocation, payment, utility,
+and incentive compatibility.
+
+The toy mechanism is a two-bidder second-price auction from bidder 1's
+perspective. Bidder 2's bid is treated as the environment. Bidder 1 wins
+exactly when `bid2 ≤ bid1`; if bidder 1 wins, they pay `bid2`.
+
+This is deliberately a small direct-revelation mechanism: the proof target is
+that reporting the true value weakly dominates any alternative report, for any
+fixed opponent bid.
+-/
+
+def winsSecondPrice (bid1 bid2 : Nat) : Prop :=
+  bid2 <= bid1
+
+instance winsSecondPriceDecidable (bid1 bid2 : Nat) :
+    Decidable (winsSecondPrice bid1 bid2) :=
+  inferInstanceAs (Decidable (bid2 <= bid1))
+
+def secondPriceUtility (value bid1 bid2 : Nat) : Int :=
+  if winsSecondPrice bid1 bid2 then
+    (value : Int) - (bid2 : Int)
+  else
+    0
+
+def reportWeaklyDominates
+    (value truthful alternative : Nat) : Prop :=
+  ∀ bid2 : Nat,
+    secondPriceUtility value truthful bid2 >=
+      secondPriceUtility value alternative bid2
+
+-- Exercise 1.
+-- If both the truthful report and the alternative report win against `bid2`,
+-- the utility is the same: both pay the second price.
+theorem secondPriceUtility_same_when_both_win
+    (value truthful alternative bid2 : Nat)
+    (hTruthWins : winsSecondPrice truthful bid2)
+    (hAltWins : winsSecondPrice alternative bid2) :
+    secondPriceUtility value truthful bid2 =
+      secondPriceUtility value alternative bid2 := by
+  sorry
+
+-- Exercise 2.
+-- If neither report wins, both utilities are zero.
+theorem secondPriceUtility_same_when_both_lose
+    (value truthful alternative bid2 : Nat)
+    (hTruthLoses : ¬ winsSecondPrice truthful bid2)
+    (hAltLoses : ¬ winsSecondPrice alternative bid2) :
+    secondPriceUtility value truthful bid2 =
+      secondPriceUtility value alternative bid2 := by
+  sorry
+
+-- Exercise 3.
+-- If truthful bidding wins but an alternative loses, truthful utility is
+-- nonnegative. This is where `truthful = value` matters.
+theorem truthful_win_alt_lose_nonnegative
+    (value alternative bid2 : Nat)
+    (hTruthWins : winsSecondPrice value bid2)
+    (hAltLoses : ¬ winsSecondPrice alternative bid2) :
+    secondPriceUtility value value bid2 >=
+      secondPriceUtility value alternative bid2 := by
+  sorry
+
+-- Exercise 4.
+-- The dangerous-looking case is overbidding: the alternative wins while the
+-- truthful bid loses. Show truthful bidding is still at least as good because
+-- the winning alternative would pay more than the value.
+theorem truthful_lose_alt_win_nonpositive
+    (value alternative bid2 : Nat)
+    (hTruthLoses : ¬ winsSecondPrice value bid2)
+    (hAltWins : winsSecondPrice alternative bid2) :
+    secondPriceUtility value value bid2 >=
+      secondPriceUtility value alternative bid2 := by
+  sorry
+
+-- Exercise 5.
+-- Main theorem: truthful reporting weakly dominates any alternative report in
+-- the toy second-price auction.
+theorem truthful_secondPrice_weaklyDominates
+    (value alternative : Nat) :
+    reportWeaklyDominates value value alternative := by
+  sorry
 
 end Unit3.StrategicGames
