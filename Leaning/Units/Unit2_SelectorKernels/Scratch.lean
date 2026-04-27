@@ -26,7 +26,7 @@ structure Quote where
   venue : Nat
   output : Nat
   valid : Bool
-deriving Repr
+deriving Repr, DecidableEq
 
 def isValidQuote (q : Quote) : Prop :=
   q.valid = true
@@ -324,5 +324,66 @@ theorem selectBestQuote_full_contract (quotes : List Quote) (fallback : Quote) :
     . simpa [isFromCandidates] using
         selectBestQuote_eq_fallback_or_mem quotes fallback
     . exact selectBestQuote_optimal_for_allowed_candidates quotes fallback
+
+/-!
+## Session 10: Unit 2 Closeout — Tie Behavior and All-Invalid Case
+
+Two edge cases round out the selector's behavioral specification:
+
+1. **Tie-breaking direction**: when both candidates are valid and have equal
+   output, `betterQuote` is right-biased — the challenger (right argument) wins.
+
+2. **All-invalid fallback**: when every candidate in the list is invalid,
+   `selectBestQuote` returns the original fallback unchanged.
+
+After the two theorems, a concrete order-sensitivity check shows what the
+right-bias means for a real routing scenario.
+-/
+
+-- Exercise 1.
+-- Prove the right-bias on ties.
+-- When b is valid and the output values are equal, betterQuote picks b.
+theorem betterQuote_tie_takes_right (a b : Quote) :
+  b.valid = true -> a.output = b.output -> betterQuote a b = b := by
+  intro hValidB
+  intro hEqualOutput
+  simp[hValidB, hEqualOutput, betterQuote]
+
+-- Exercise 2.
+-- Prove that when no candidate in the list is valid, the fallback is returned.
+-- Hint: use induction generalizing fallback.
+-- In the cons case, the hypothesis `∀ q ∈ h :: t, q.valid = false` can be
+-- split into a head fact and a tail fact with `List.forall_mem_cons`.
+theorem selectBestQuote_fallback_when_no_valid (quotes : List Quote) (fallback : Quote) :
+  (∀ q ∈ quotes, q.valid = false) ->
+    selectBestQuote quotes fallback = fallback := by
+  induction quotes generalizing fallback with
+  | nil =>
+    simp[selectBestQuote]
+  | cons q qs ih =>
+    intro hInvalidQ
+    simp_all[selectBestQuote, betterQuote_keeps_left_when_right_invalid]
+
+/-!
+### Order Sensitivity Check
+
+`selectBestQuote` is right-biased: among valid candidates with equal output,
+the later one in the list wins. This means the selector is NOT commutative —
+routing result depends on the order venues are presented.
+
+Verify concretely, then confirm formally.
+-/
+
+private def qA : Quote := { venue := 1, output := 100, valid := true }
+private def qB : Quote := { venue := 2, output := 100, valid := true }
+private def qFb : Quote := { venue := 0, output := 0, valid := true }
+
+#eval selectBestQuote [qA, qB] qFb   -- expect qB (venue 2 wins, it's later)
+#eval selectBestQuote [qB, qA] qFb   -- expect qA (venue 1 wins, it's later)
+
+-- Exercise 3 (uses native_decide — no proof work needed, just run it).
+-- Confirm the order-sensitivity result as a formal statement.
+example : selectBestQuote [qA, qB] qFb ≠ selectBestQuote [qB, qA] qFb := by
+  native_decide
 
 end Unit2.SelectorKernels

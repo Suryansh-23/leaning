@@ -11,27 +11,26 @@ When the tutor needs to know "where are we?", start here before inferring from
 the rest of the repo.
 
 Current unit:
-- Unit 2: Selector Kernels
+- Unit 3: Strategic Games and Mechanisms (starting next)
 
 Current sub-unit / frontier:
-- Unit 2 closeout: tie behavior and curated migration after global optimality in
-  `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- Unit 2 is complete and migrated; ready to open Unit 3
 
 Last solid checkpoint:
-- completed through the current Session 5 material in `Leaning/Basic.lean`
+- Unit 2 fully closed out: all sessions 6–10 proved in Scratch.lean,
+  migrated verbatim into Core.lean, both files check clean
 
 Current live artifact:
-- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean`
+- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` (not yet
+  scaffolded — next session opens it)
 
 Current curated migration status:
-- repo structure, tutor docs, unit skeletons, and skills are in place
-- solved Unit 0 / Unit 1 material now has curated namespaced mirrors in the
-  unit `Core.lean` modules
-- Unit 2 active work has moved into the unit-specific `Scratch.lean` file
+- Unit 2 Core.lean fully populated with all stable theorems
+- Unit 3 Scratch.lean is the next file to scaffold
 
 Ready to branch into:
 - Unit 3: Strategic Games and Mechanisms
-- Unit 4: Arithmetic and Bounds, after selector basics need scoring/bounds
+- Unit 4: Arithmetic and Bounds (fallback if Unit 3 needs more numeric tooling first)
 
 Explicitly not started as Lean artifacts yet:
 - AMM core
@@ -43,11 +42,11 @@ Explicitly not started as Lean artifacts yet:
 ## Last Checkpoint
 
 Date:
-- 2026-04-26
+- 2026-04-27
 
 What was verified:
-- `Leaning/Basic.lean` checks
-- the package root `Leaning` builds with the new unit module tree
+- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks clean (no sorry, no errors)
+- `Leaning/Units/Unit2_SelectorKernels/Core.lean` checks clean
 - `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks with intended
   `sorry` placeholders for the active Unit 2 session batch
 
@@ -379,6 +378,34 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Unit 2 Closeout And Migration Complete
+
+Session intent:
+- prove tie-breaking behavior and all-invalid edge case; migrate to Core.lean
+
+Tutor actions:
+- scaffolded Session 10 in Scratch.lean (tie theorem, no-valid theorem, order-sensitivity demo)
+- migrated all Unit 2 material verbatim from Scratch.lean into Core.lean
+- updated Progress Ledger to Unit 3
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Scratch.lean` — clean
+- `~/.elan/bin/lake env lean Leaning/Units/Unit2_SelectorKernels/Core.lean` — clean
+
+Learner response / behavior:
+- corrected tutor for rewriting proofs instead of copying them; correct feedback
+
+Tutor analysis:
+- Session 10 score: 9.5/10. Exercise 1 is idiomatic; Exercise 2 found a more
+  compact proof than the hint suggested using `simp_all` instead of manual
+  `List.forall_mem_cons` destructuring
+
+Checkpoint result:
+- Unit 2 fully closed out; Core.lean populated; Unit 3 is the next frontier
+
+Next move:
+- scaffold Unit 3: Strategic Games and Mechanisms
 
 ### 2026-04-27 - Unit 2 Global Optimality Complete
 
