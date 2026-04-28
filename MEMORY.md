@@ -14,7 +14,7 @@ Current unit:
 - Unit 4: NNReal and Continuous Arithmetic
 
 Current sub-unit / frontier:
-- Session 15 next: PReal / SX-style arithmetic surface after Session 14 in
+- Session 15 complete: PReal / SX-style arithmetic wrapper surface in
   `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
 
 Last solid checkpoint:
@@ -28,11 +28,10 @@ Current curated migration status:
 - Unit 2 Core.lean fully populated
 - Unit 3 Core.lean fully populated
 - Unit 4 Scratch.lean has completed Session 14 NNReal constprod proofs and
-  now has Session 15 PReal/SX wrapper exercises scaffolded
+  Session 15 PReal/SX wrapper exercises
 
 Ready to branch into:
-- Unit 4: complete Session 15 PReal / SX wrapper transport, then migrate the
-  stable Unit 4 arithmetic surface into Core.lean
+- Unit 4: migrate the stable arithmetic/PReal surface into Core.lean
 - Unit 5: Finsupp ledgers after Unit 4 is curated
 
 Explicitly not started as Lean artifacts yet:
@@ -85,8 +84,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- learner completes Session 15 PReal/SX-style positivity-by-type exercises in
-  `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- review whether to migrate Unit 4 Scratch into Core.lean now, then branch to
+  Unit 5 Finsupp ledgers
 
 ## Stable Profile
 
@@ -120,8 +119,8 @@ Next intended move:
   - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
   - direct second-price auction mechanism scaffold
 - Current repo transition:
-- active learner work is now Session 15 in Unit 4 Scratch after completing the
-  Session 14 NNReal constprod theorem family
+- active learner work has completed the Unit 4 Scratch arithmetic/PReal wrapper
+  surface; next checkpoint should curate Unit 4 Core or start Unit 5
 
 ## Concept State
 
@@ -430,6 +429,38 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 4 Session 15 Complete
+
+Session intent:
+- review completed PReal/SX wrapper exercises
+
+Tutor actions:
+- inspected `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- validated the solved Session 15 definitions and lifted theorem proofs
+- updated the checkpoint ledger to mark Session 15 complete
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+  checks cleanly with no warnings
+
+Learner response / behavior:
+- completed the PReal wrapper batch quickly and cleanly
+
+Tutor analysis:
+- Session 15 score: 9/10. The definitions show the right type-level positivity
+  model and the theorem proofs correctly reuse the NNReal facts rather than
+  redoing the arithmetic. Minor growth point: prefer recognizing when a direct
+  wrapper theorem call plus projection lemma is clearer than a broad `simp`
+  call, especially as the PReal/SX API grows.
+
+Checkpoint result:
+- Unit 4 Scratch now has both the NNReal arithmetic facts and a PReal/SX-shaped
+  wrapper surface for constprod
+
+Next move:
+- migrate stable Unit 4 material into Core.lean, then branch to Unit 5 Finsupp
+  ledgers unless a short SX-type alias bridge is desired first
 
 ### 2026-04-28 - Unit 4 Session 15 Scaffolded
 

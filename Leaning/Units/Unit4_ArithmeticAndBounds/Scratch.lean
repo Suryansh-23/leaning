@@ -206,35 +206,36 @@ the three NNReal constprod facts.
 -- Exercise 1.
 -- Define positive multiplication.
 -- Goal: the product of two positive values is positive.
-def PReal.mul (x y : ℝ>0) : ℝ>0 := by
-  sorry
+def PReal.mul (x y : ℝ>0) : ℝ>0 :=
+  ⟨x.val * y.val, mul_pos x.prop y.prop⟩
 
 -- Exercise 2.
 -- Define positive division.
 -- Goal: a positive numerator divided by a positive denominator is positive.
-noncomputable def PReal.div (x y : ℝ>0) : ℝ>0 := by
-  sorry
+noncomputable def PReal.div (x y : ℝ>0) : ℝ>0 :=
+  ⟨x.val / y.val, div_pos x.prop y.prop⟩
 
 -- Exercise 3.
 -- Wrap the NNReal constprod function as a strictly-positive function.
 -- Notice: this definition should not need a separate positivity hypothesis;
 -- positivity comes from the PReal arguments.
-noncomputable def PReal.constprod (x r0 r1 : ℝ>0) : ℝ>0 := by
-  sorry
+noncomputable def PReal.constprod (x r0 r1 : ℝ>0) : ℝ>0 :=
+  r1.div (r0.add x)
 
 -- Exercise 4.
 -- Projection sanity check: the `.val` of the wrapper is the old NNReal function.
 theorem PReal.constprod_val (x r0 r1 : ℝ>0) :
     (PReal.constprod x r0 r1).val =
       Unit4.Arithmetic.constprod x.val r0.val r1.val := by
-  sorry
+  simp[constprod, div, add, Arithmetic.constprod]
 
 -- Exercise 5.
 -- Lift outputbound to the PReal API.
 -- The statement has no explicit `hx`, `hr0`, or `hr1`; find them on the inputs.
 theorem PReal.constprod_outputbound (x r0 r1 : ℝ>0) :
     x.val * (PReal.constprod x r0 r1).val < r1.val := by
-  sorry
+  simp[constprod, div, add]
+  exact Arithmetic.constprod_outputbound x r0 r1 x.prop r0.prop r1.prop
 
 -- Exercise 6.
 -- Lift strictmono to the PReal API.
@@ -242,7 +243,7 @@ theorem PReal.constprod_outputbound (x r0 r1 : ℝ>0) :
 theorem PReal.constprod_strictmono
     (x y r0 r1 : ℝ>0) (hxy : x.val ≤ y.val) :
     (PReal.constprod y r0 r1).val ≤ (PReal.constprod x r0 r1).val := by
-  sorry
+  simp[PReal.constprod_val, Arithmetic.constprod_strictmono x y r0 r1 hxy r0.prop]
 
 -- Exercise 7.
 -- Lift homogeneity to the PReal API using `PReal.mul`.
@@ -251,6 +252,7 @@ theorem PReal.constprod_strictmono
 theorem PReal.constprod_homogeneous (x r0 r1 a : ℝ>0) :
     (PReal.constprod (PReal.mul a x) (PReal.mul a r0) (PReal.mul a r1)).val =
       (PReal.constprod x r0 r1).val := by
-  sorry
+  simp[constprod, mul, add, div]
+  exact Arithmetic.constprod_homogeneous x r0 r1 a a.prop
 
 end Unit4.Arithmetic
