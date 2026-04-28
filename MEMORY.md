@@ -14,8 +14,8 @@ Current unit:
 - Unit 4: NNReal and Continuous Arithmetic
 
 Current sub-unit / frontier:
-- Session 14: NNReal arithmetic, constprod, outputbound/strictmono/homogeneous
-  in `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- Session 15 next: PReal / SX-style arithmetic surface after Session 14 in
+  `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
 
 Last solid checkpoint:
 - Unit 3 fully closed out: Sessions 11–13 proved in Scratch.lean,
@@ -27,7 +27,7 @@ Current live artifact:
 Current curated migration status:
 - Unit 2 Core.lean fully populated
 - Unit 3 Core.lean fully populated
-- Unit 4 Scratch.lean scaffolded for Session 14 (5 sorries)
+- Unit 4 Scratch.lean has completed Session 14 NNReal constprod proofs
 
 Ready to branch into:
 - Unit 3: close out Session 13, migrate to Core.lean, then advance to Unit 4
@@ -83,8 +83,8 @@ What was established:
   scratch artifact
 
 Next intended move:
-- complete Session 13: toy second-price auction utility and truthful-reporting
-  dominance
+- scaffold Session 15 around PReal/SX-style positivity-by-type or migrate
+  stable Unit 4 arithmetic into Core.lean before Unit 6 AMM work
 
 ## Stable Profile
 
@@ -118,7 +118,7 @@ Next intended move:
   - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
   - direct second-price auction mechanism scaffold
 - Current repo transition:
-  - active learner work is now in Unit 3 Scratch after Unit 2 migration
+- active learner work is now in Unit 4 Scratch after Unit 3 migration
 
 ## Concept State
 
@@ -427,6 +427,39 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 4 Session 14 Complete
+
+Session intent:
+- review completed NNReal constprod arithmetic proofs
+
+Tutor actions:
+- inspected `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- validated Session 14 with Lean
+- made a small proof-local cleanup in `constprod_outputbound` so the positive
+  trade-size hypothesis is used explicitly and the file checks without warnings
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+  checks cleanly
+
+Learner response / behavior:
+- completed the NNReal arithmetic session after small hints on division
+  rewriting and denominator monotonicity
+
+Tutor analysis:
+- Session 14 score: 8.5/10. The core AMM arithmetic facts are proved and the
+  learner handled new Mathlib arithmetic tools well. Remaining growth is
+  recognizing which rewrite lemmas need explicit positivity hypotheses and when
+  a theorem hypothesis is economically meaningful but mathematically redundant.
+
+Checkpoint result:
+- Unit 4 now has `constprod` positivity, output bound, denominator monotonicity,
+  and homogeneity over `NNReal`
+
+Next move:
+- either migrate the stable Unit 4 arithmetic to Core or add a short PReal/SX
+  wrapper session so positivity assumptions are carried by types before Unit 6
 
 ### 2026-04-27 - Roadmap Refit: AMM Design Specialization
 

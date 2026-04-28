@@ -68,14 +68,14 @@ noncomputable def constprod (x r0 r1 : NNReal) : NNReal :=
 -- This is a helper you will reuse in the next three proofs.
 -- Hint: `linarith` closes linear arithmetic over NNReal directly.
 lemma denom_pos (x r0 : NNReal) (hr0 : 0 < r0) : 0 < r0 + x := by
-  sorry
+  simp[hr0]
 
 -- Exercise 2.
 -- constprod output is positive whenever r1 is positive and r0 is positive.
 -- Hint: `div_pos` takes two positivity proofs.
 lemma constprod_pos (x r0 r1 : NNReal) (hr0 : 0 < r0) (hr1 : 0 < r1) :
     0 < constprod x r0 r1 := by
-  sorry
+  simp[constprod, hr0, hr1]
 
 -- Exercise 3.
 -- **Output bound**: the amount received never exceeds the reserve.
@@ -86,10 +86,14 @@ lemma constprod_pos (x r0 r1 : NNReal) (hr0 : 0 < r0) (hr1 : 0 < r1) :
 --   x * (r1 / (r0 + x))
 --   = x * r1 / (r0 + x)       [← mul_div_assoc]
 --   < r1                       [div_lt_iff₀, then nlinarith with mul_pos hr1 hr0]
-theorem constprod_outputbound
-    (x r0 r1 : NNReal) (hx : 0 < x) (hr0 : 0 < r0) (hr1 : 0 < r1) :
+theorem constprod_outputbound (x r0 r1 : NNReal) (hx : 0 < x) (hr0 : 0 < r0) (hr1 : 0 < r1) :
     x * constprod x r0 r1 < r1 := by
-  sorry
+    simp[constprod]
+    have hden : 0 < r0 + x := denom_pos x r0 hr0
+    have hx_nonneg : 0 <= x := le_of_lt hx
+    rw [← mul_div_assoc]
+    rw [div_lt_iff₀ hden]
+    nlinarith[hx_nonneg, hr0, hr1]
 
 -- Exercise 4.
 -- **Strict monotonicity**: a larger trade gets a worse exchange rate.
@@ -102,7 +106,12 @@ theorem constprod_outputbound
 theorem constprod_strictmono
     (x y r0 r1 : NNReal) (hxy : x ≤ y) (hr0 : 0 < r0) :
     constprod y r0 r1 ≤ constprod x r0 r1 := by
-  sorry
+  simp[constprod]
+  have hr1 : 0 <= r1 := by positivity
+  have hc : 0 < r0 + x := denom_pos x r0 hr0
+  have hden : r0 + x <= r0 + y := by linarith
+  -- r1 / (r0 + y) ≤ r1 / (r0 + x)
+  simp[div_le_div_of_nonneg_left hr1 hc hden]
 
 -- Exercise 5.
 -- **Homogeneity**: scaling all inputs by the same positive factor leaves the
@@ -113,10 +122,11 @@ theorem constprod_strictmono
 -- of reserves and trade-to-reserve ratio matters.
 --
 -- Hint: unfold constprod, `rw [← mul_add]`, then `field_simp [ha.ne']`.
-theorem constprod_homogeneous
-    (x r0 r1 a : NNReal) (ha : 0 < a) :
+theorem constprod_homogeneous (x r0 r1 a : NNReal) (ha : 0 < a) :
     constprod (a * x) (a * r0) (a * r1) = constprod x r0 r1 := by
-  sorry
+  simp[constprod]
+  rw [← mul_add]
+  field_simp
 
 /-!
 ### Session 14 stretch: why PReal
