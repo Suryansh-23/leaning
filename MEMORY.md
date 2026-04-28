@@ -41,9 +41,18 @@ Explicitly not started as Lean artifacts yet:
 - Unit 9: Novel AMM Designs (fee-aware SX, new invariant curves)
 - Unit 10: Verification Bridges / Integer Bridge (capstone)
 
-Reference material:
-- dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024) cloned at `.context/lean4-amm/`
-  — canonical calibration target for Unit 6 SX framework definitions and property names
+Reference material (all in `.context/`, gitignored):
+- `.context/lean4-amm/` — dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024)
+  calibration target for Unit 6 SX definitions and property names
+- `.context/papers/lean4-amm-pusceddu-bartoletti-2024.pdf` — FMBC 2024 paper
+- `.context/papers/lean4-amm-fees-bartoletti-2025.pdf` — 2025 fees follow-on
+- `.context/papers/stableswap-egorov-2019.pdf` — Curve stableswap whitepaper
+- `.context/curve-contract/` — Curve Finance reference Vyper implementation
+- `.context/papers/coq-dex-nielsen-2023.pdf` — Coq/ConCert DEX (CPP 2023)
+- `.context/papers/tickmath-tranquilli-2024.pdf` — TLA+ tick math (2024)
+
+Unit 9 capstone: stableswap (Curve v1) as a novel SX instance — first
+proof-assistant formalization of stableswap anywhere
 
 ## Last Checkpoint
 

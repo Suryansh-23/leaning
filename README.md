@@ -96,12 +96,14 @@ This book follows a mixed spiral progression:
 - LP token pricing: (r0·p0 + r1·p1) / supply
 - invariants across the full create/deposit/swap/redeem lifecycle
 
-### Unit 9: Novel AMM Designs
+### Unit 9: Stableswap — Novel AMM Design Capstone
 
-- fee-aware `SX` instances: how fees modify the swap function
-- designing new invariant curves and proving their `SX` properties
-- range constraints, weighted pools, stableswap-style curves as targets
-- the design-verify cycle: propose an `SX`, prove it satisfies the framework
+- Curve Finance stableswap as a second `SX` instance, proved against the full
+  property suite (outputbound, homogeneous, strictmono)
+- D existence and uniqueness via the intermediate value theorem
+- Newton-Raphson convergence for the `get_y` cubic solve (stretch goal)
+- first proof-assistant formalization of stableswap — fills a gap in the literature
+- comparison with constprod: formally proving stableswap gives lower slippage near peg
 
 ### Unit 10: Verification Bridges (capstone)
 

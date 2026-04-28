@@ -240,7 +240,7 @@ theorem secondPriceUtility_same_when_both_win
     (hAltWins : winsSecondPrice alternative bid2) :
     secondPriceUtility value truthful bid2 =
       secondPriceUtility value alternative bid2 := by
-  sorry
+  simp[secondPriceUtility, hTruthWins, hAltWins]
 
 -- Exercise 2.
 -- If neither report wins, both utilities are zero.
@@ -250,7 +250,7 @@ theorem secondPriceUtility_same_when_both_lose
     (hAltLoses : ¬ winsSecondPrice alternative bid2) :
     secondPriceUtility value truthful bid2 =
       secondPriceUtility value alternative bid2 := by
-  sorry
+  simp[secondPriceUtility, hTruthLoses, hAltLoses]
 
 -- Exercise 3.
 -- If truthful bidding wins but an alternative loses, truthful utility is
@@ -261,7 +261,10 @@ theorem truthful_win_alt_lose_nonnegative
     (hAltLoses : ¬ winsSecondPrice alternative bid2) :
     secondPriceUtility value value bid2 >=
       secondPriceUtility value alternative bid2 := by
-  sorry
+  simp[secondPriceUtility, hAltLoses]
+  simp[hTruthWins]
+  simp[winsSecondPrice] at hTruthWins
+  exact hTruthWins
 
 -- Exercise 4.
 -- The dangerous-looking case is overbidding: the alternative wins while the
@@ -273,7 +276,9 @@ theorem truthful_lose_alt_win_nonpositive
     (hAltWins : winsSecondPrice alternative bid2) :
     secondPriceUtility value value bid2 >=
       secondPriceUtility value alternative bid2 := by
-  sorry
+  simp[winsSecondPrice] at hTruthLoses hAltWins
+  simp[secondPriceUtility, winsSecondPrice, hAltWins]
+  omega
 
 -- Exercise 5.
 -- Main theorem: truthful reporting weakly dominates any alternative report in
@@ -281,6 +286,10 @@ theorem truthful_lose_alt_win_nonpositive
 theorem truthful_secondPrice_weaklyDominates
     (value alternative : Nat) :
     reportWeaklyDominates value value alternative := by
-  sorry
+  simp[reportWeaklyDominates, secondPriceUtility, winsSecondPrice]
+  intro someBid2
+  by_cases h: someBid2 <= alternative && someBid2 <= value
+  · omega
+  · omega
 
 end Unit3.StrategicGames

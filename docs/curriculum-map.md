@@ -36,11 +36,26 @@ continuous Layer A specs (Units 6-8) to integer implementations
 - Unit 7 → Unit 8 or Unit 9
 - Unit 9 → Unit 10 (capstone connects designs to computable implementations)
 
-## Reference Implementation
+## Reference Material
 
-dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024) — cloned to
-`.context/lean4-amm`. Engage with it directly starting at Unit 6 to calibrate
-against established results and identify extension points.
+All reference material lives in `.context/` (gitignored).
+
+**lean4-amm** — dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024)
+- `.context/lean4-amm/` — cloned repo
+- `.context/papers/lean4-amm-pusceddu-bartoletti-2024.pdf`
+- Calibration target for Unit 6 SX definitions and property names.
+  Also has a 2025 fees follow-on: `.context/papers/lean4-amm-fees-bartoletti-2025.pdf`
+
+**Stableswap** — Curve Finance v1 (Unit 9 capstone)
+- `.context/curve-contract/` — reference Vyper implementation
+- `.context/papers/stableswap-egorov-2019.pdf` — original Egorov whitepaper
+- No proof-assistant formalization exists anywhere. Unit 9 is the first.
+
+**Comparison work**
+- `.context/papers/coq-dex-nielsen-2023.pdf` — Coq/ConCert DEX formalization
+  (Nielsen, Annenkov, Spitters, CPP 2023) — closest comparable proof-assistant work
+- `.context/papers/tickmath-tranquilli-2024.pdf` — TLA+ tick math model
+  (Tranquilli & Gupta 2024) — relevant for understanding the Uniswap v3/v4 boundary
 
 ## Purpose
 
