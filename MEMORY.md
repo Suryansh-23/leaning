@@ -11,22 +11,23 @@ When the tutor needs to know "where are we?", start here before inferring from
 the rest of the repo.
 
 Current unit:
-- Unit 3: Strategic Games and Mechanisms
+- Unit 4: NNReal and Continuous Arithmetic
 
 Current sub-unit / frontier:
-- Session 13 direct mechanisms and truthful bidding in
-  `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+- Session 14: NNReal arithmetic, constprod, outputbound/strictmono/homogeneous
+  in `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
 
 Last solid checkpoint:
-- Unit 2 fully closed out: all sessions 6–10 proved in Scratch.lean,
+- Unit 3 fully closed out: Sessions 11–13 proved in Scratch.lean,
   migrated verbatim into Core.lean, both files check clean
 
 Current live artifact:
-- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean`
+- `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
 
 Current curated migration status:
-- Unit 2 Core.lean fully populated with all stable theorems
-- Unit 3 Scratch.lean is scaffolded for Session 12
+- Unit 2 Core.lean fully populated
+- Unit 3 Core.lean fully populated
+- Unit 4 Scratch.lean scaffolded for Session 14 (5 sorries)
 
 Ready to branch into:
 - Unit 3: close out Session 13, migrate to Core.lean, then advance to Unit 4
