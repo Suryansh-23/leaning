@@ -54,8 +54,13 @@ All reference material lives in `.context/` (gitignored).
 **Comparison work**
 - `.context/papers/coq-dex-nielsen-2023.pdf` — Coq/ConCert DEX formalization
   (Nielsen, Annenkov, Spitters, CPP 2023) — closest comparable proof-assistant work
-- `.context/papers/tickmath-tranquilli-2024.pdf` — TLA+ tick math model
-  (Tranquilli & Gupta 2024) — relevant for understanding the Uniswap v3/v4 boundary
+- `.context/papers/tickmath-tranquilli-2024.pdf` — TLA+ tick math + rounding bounds
+  (Tranquilli & Gupta 2024) — only published approximation-bound work for integer AMMs
+
+**Unit 10 / Verification Bridges**
+- `.context/papers/aeneas-ho-2022.pdf` — Aeneas: Rust → Lean 4 extraction pipeline
+  (Ho, Protzenko, Fromherz, ICFP 2022) — the long-term Rust connection path
+- `.context/aeneas/` — Aeneas repo (cloned); no DeFi application exists yet
 
 ## Purpose
 

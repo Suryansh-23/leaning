@@ -54,6 +54,16 @@ Reference material (all in `.context/`, gitignored):
 Unit 9 capstone: stableswap (Curve v1) as a novel SX instance — first
 proof-assistant formalization of stableswap anywhere
 
+Unit 10 research findings:
+- No existing proof assistant formalizes an integer AMM approximation bound
+- Tranquilli & Gupta (arXiv 2512.06203) is the only published rounding-bound
+  work for integer AMMs — uses TLA+, not a proof assistant
+- Q64.96 / UQ112x112 fixed-point representations unformalized in any system
+- Aeneas (arXiv 2206.07185) is the Rust → Lean 4 extraction pipeline; no DeFi
+  application exists yet
+- Key Mathlib surfaces: Int.floor_le, Nat.div_add_mod, le_floorDiv_iff_smul_le,
+  omega, norm_cast — all in stable Mathlib4
+
 ## Last Checkpoint
 
 Date:
