@@ -11,31 +11,28 @@ When the tutor needs to know "where are we?", start here before inferring from
 the rest of the repo.
 
 Current unit:
-- Unit 4: NNReal and Continuous Arithmetic
+- Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Session 15 complete: PReal / SX-style arithmetic wrapper surface in
-  `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- Unit 5 next: keyed ledger / Finsupp wallet surface in
+  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
-- Unit 3 fully closed out: Sessions 11–13 proved in Scratch.lean,
-  migrated verbatim into Core.lean, both files check clean
+- Unit 4 closed out: NNReal constprod arithmetic and PReal/SX wrapper surface
+  proved in Scratch.lean, migrated into Core.lean, and full package build checks
 
 Current live artifact:
-- `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Current curated migration status:
 - Unit 2 Core.lean fully populated
 - Unit 3 Core.lean fully populated
-- Unit 4 Scratch.lean has completed Session 14 NNReal constprod proofs and
-  Session 15 PReal/SX wrapper exercises
+- Unit 4 Core.lean fully populated
 
 Ready to branch into:
-- Unit 4: migrate the stable arithmetic/PReal surface into Core.lean
-- Unit 5: Finsupp ledgers after Unit 4 is curated
+- Unit 5: Finsupp ledgers over sparse token-balance maps
 
 Explicitly not started as Lean artifacts yet:
-- Unit 5: Finsupp Ledgers (token balance maps)
 - Unit 6: AMM Kernels and the SX Framework (constprod, outputbound, homogeneous, etc.)
 - Unit 7: AMM Economic Properties (gain_direction, arbitrage_solve)
 - Unit 8: LP Mechanics (deposit, redeem, supply conservation)
@@ -68,24 +65,22 @@ Unit 10 research findings:
 ## Last Checkpoint
 
 Date:
-- 2026-04-27
+- 2026-04-28
 
 What was verified:
-- `Leaning/Units/Unit2_SelectorKernels/Scratch.lean` checks clean (no sorry, no errors)
-- `Leaning/Units/Unit2_SelectorKernels/Core.lean` checks clean
-- `Leaning/Units/Unit3_StrategicGamesAndMechanisms/Scratch.lean` checks clean
+- `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean` checks clean
+- `Leaning/Units/Unit4_ArithmeticAndBounds/Core.lean` checks clean
+- `~/.elan/bin/lake build Leaning` completes successfully
 
 What was established:
-- the repo now has a stable book/tutor structure
-- the curriculum has been broadened beyond the early local proof loop
-- the next true content branch should leave the local trough rather than
-  repeating more of the same theorem family
-- Unit 0 / Unit 1 now have curated module surfaces in addition to the live
-  scratch artifact
+- Unit 4 now has a stable continuous Layer A arithmetic surface
+- `constprod` output bound, denominator monotonicity, and homogeneity are
+  available in Core.lean
+- `PReal` positivity-by-type wrappers are available for the SX framework
+- the next content branch should move into sparse keyed ledger state
 
 Next intended move:
-- review whether to migrate Unit 4 Scratch into Core.lean now, then branch to
-  Unit 5 Finsupp ledgers
+- scaffold Unit 5 Session 16 in `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 ## Stable Profile
 
@@ -119,8 +114,7 @@ Next intended move:
   - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
   - direct second-price auction mechanism scaffold
 - Current repo transition:
-- active learner work has completed the Unit 4 Scratch arithmetic/PReal wrapper
-  surface; next checkpoint should curate Unit 4 Core or start Unit 5
+- active learner work should now start Unit 5 after Unit 4 migration
 
 ## Concept State
 
@@ -429,6 +423,41 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 4 Curated Into Core
+
+Session intent:
+- migrate completed Unit 4 arithmetic/PReal work into the curated unit artifact
+
+Tutor actions:
+- replaced the placeholder `Leaning/Units/Unit4_ArithmeticAndBounds/Core.lean`
+  with the stable NNReal constprod and PReal wrapper API
+- kept the scratch file as the worked session history
+- fixed namespace shadowing in PReal theorem statements by qualifying the
+  underlying NNReal `constprod` family
+- updated the checkpoint ledger to make Unit 5 the next live branch
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit4_ArithmeticAndBounds/Core.lean`
+  checks cleanly
+- `~/.elan/bin/lake build Leaning` completes successfully
+
+Learner response / behavior:
+- approved moving ahead after completing Session 15
+
+Tutor analysis:
+- Unit 4 is now a useful dependency for future units, not just a scratch result
+- the core surface still uses some broad `simp` proof style inherited from the
+  learning session; acceptable for now, but later library-grade cleanup can
+  tighten these proofs if needed
+
+Checkpoint result:
+- Unit 4 closed out and curated
+- current frontier is Unit 5 keyed/Finsupp ledgers
+
+Next move:
+- scaffold Unit 5 Session 16 with a prerequisite roundup for `Finsupp`,
+  sparse maps, keyed updates, and untouched-key reasoning
 
 ### 2026-04-28 - Unit 4 Session 15 Complete
 
