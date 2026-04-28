@@ -14,7 +14,7 @@ Current unit:
 - Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Unit 5 next: keyed ledger / Finsupp wallet surface in
+- Session 16 next: keyed ledger / Finsupp wallet surface in
   `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
@@ -28,6 +28,7 @@ Current curated migration status:
 - Unit 2 Core.lean fully populated
 - Unit 3 Core.lean fully populated
 - Unit 4 Core.lean fully populated
+- Unit 5 Scratch.lean has Session 16 Finsupp wallet exercises scaffolded
 
 Ready to branch into:
 - Unit 5: Finsupp ledgers over sparse token-balance maps
@@ -80,7 +81,8 @@ What was established:
 - the next content branch should move into sparse keyed ledger state
 
 Next intended move:
-- scaffold Unit 5 Session 16 in `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- learner completes Unit 5 Session 16 in
+  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 ## Stable Profile
 
@@ -423,6 +425,41 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 5 Session 16 Scaffolded
+
+Session intent:
+- start Unit 5 after Unit 4 was curated into Core
+
+Tutor actions:
+- inspected Unit 5 README, current checkpoint ledger, and the empty Unit 5
+  scratch file
+- checked the relevant Mathlib and lean4-amm Finsupp/update surfaces
+- scaffolded Session 16 in
+  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- added the prerequisite roundup for `α →₀ β`, sparse map application,
+  `Finsupp.update`, `Finsupp.erase`, `[DecidableEq Token]`, and same-key vs
+  different-key readback contracts
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+  checks with ten intended `sorry` warnings
+
+Learner response / behavior:
+- approved moving ahead after the Unit 4 Core migration
+
+Tutor analysis:
+- Unit 5 should begin with keyed update semantics rather than immediately
+  jumping into `Finsupp.sum`, so the learner gets the wallet-state API before
+  conservation proofs
+
+Checkpoint result:
+- Session 16 is ready in Unit 5 Scratch; current unsolved frontier is wallet
+  deposit/withdraw/drain definitions and readback lemmas
+
+Next move:
+- learner solves Session 16; tutor reviews, validates, scores, then branches
+  into worth/sum decomposition and conservation
 
 ### 2026-04-28 - Unit 4 Curated Into Core
 
