@@ -14,7 +14,7 @@ Current unit:
 - Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Session 16 complete: keyed ledger / Finsupp wallet surface in
+- Session 17 next: wallet worth / Finsupp sum decomposition in
   `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
@@ -29,7 +29,7 @@ Current curated migration status:
 - Unit 3 Core.lean fully populated
 - Unit 4 Core.lean fully populated
 - Unit 5 Scratch.lean has completed Session 16 Finsupp wallet update/readback
-  exercises
+  exercises and Session 17 worth/sum exercises scaffolded
 
 Ready to branch into:
 - Unit 5: Finsupp ledgers over sparse token-balance maps
@@ -78,7 +78,8 @@ What was established:
 - same-key, different-key, and independent deposit commutation facts are proved
 
 Next intended move:
-- scaffold Unit 5 Session 17 around worth/sum decomposition and conservation
+- learner completes Unit 5 Session 17 around worth/sum decomposition and
+  conservation
 
 ## Stable Profile
 
@@ -421,6 +422,40 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 5 Session 17 Scaffolded
+
+Session intent:
+- prepare the next Unit 5 session after completed keyed wallet updates
+
+Tutor actions:
+- inspected the current Unit 5 scratch file, Unit 5 README, checkpoint ledger,
+  Mathlib Finsupp sum lemmas, and lean4-amm `W₀.worth` reference
+- scaffolded Session 17 in
+  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- added a prerequisite roundup for `Finsupp.sum`, zero-preserving sum functions,
+  `Finsupp.add_sum_erase'`, local `update_zero_eq_erase`, and aggregate
+  worth/conservation proof shape
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+  checks with seven intended `sorry` warnings
+
+Learner response / behavior:
+- approved continuing after completing Session 16
+
+Tutor analysis:
+- Unit 5 should now shift from pointwise key updates to aggregate wallet value,
+  because worth decomposition is the proof bridge into conservation and AMM
+  state reasoning
+
+Checkpoint result:
+- Session 17 is ready in Unit 5 Scratch; current unsolved frontier is worth,
+  erase/update bridge, worth decomposition, and deposit/withdraw worth effects
+
+Next move:
+- learner solves Session 17; tutor reviews and then likely scaffolds account-
+  indexed wallet sets or curates the first Unit 5 core slice
 
 ### 2026-04-28 - Unit 5 Session 16 Complete
 

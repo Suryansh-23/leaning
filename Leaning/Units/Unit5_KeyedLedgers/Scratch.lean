@@ -140,6 +140,103 @@ theorem deposit_comm_diff (w : Wallet Token) (t0 t1 : Token) (x0 x1 : NNReal) (h
     · simp_all[deposit]
     · simp[deposit, ht0, ht1]
 
+/-!
+## Session 17: wallet worth and sum decomposition
+
+### Unit progress
+
+Unit 5 is roughly 25% complete. You have the local keyed-update API now:
+deposit, withdraw, drain, and independent-key commutation. This session adds
+the aggregate layer: valuing a sparse wallet by summing each balance times a
+price.
+
+### Why this session is next
+
+Unit 6 and later AMM proofs care about both local balances and aggregate value.
+The new proof shape is "one key plus the rest of the finite support", which is
+how conservation and no-unintended-value-change proofs are usually structured.
+
+### Prerequisite roundup
+
+New tools and patterns:
+
+- `w.sum fun t x => ...` folds over the nonzero entries of a Finsupp.
+  The first argument is the key, the second is the stored value at that key.
+  For a wallet, `w.sum fun t bal => bal * price t` is total marked-to-market
+  value.
+
+- The function passed to `sum` must map zero balances to zero for key-splitting
+  lemmas to behave well. For worth, this is just `0 * price t = 0`.
+
+- `Finsupp.add_sum_erase'` is the main decomposition lemma.
+  It says a sum over `w` can be split into the contribution at token `t` plus
+  the sum over `w.erase t`.
+
+- `Finsupp.update_zero_eq_erase` is not available as a built-in here in the
+  exact form we want, so first prove a local bridge:
+  updating a key to zero equals erasing that key.
+
+- Conservation proofs usually reduce to two local update facts:
+  the sender loses `amount`, the receiver gains `amount`, and every other key
+  is unchanged. In this session we stay at the one-wallet worth layer.
+
+### Hint policy
+
+For decomposition, do not unfold into support finsets manually unless you are
+stuck. First try the named Finsupp lemma. If the direction is opposite, use
+`rw [← ...]` or commute the final addition.
+-/
+
+-- Exercise 11.
+-- Define wallet worth under an external price function.
+-- `price t` is the value of one unit of token `t`.
+noncomputable def worth (w : Wallet Token) (price : Token → NNReal) : NNReal := by
+  sorry
+
+-- Exercise 12.
+-- Local bridge: updating a token to zero is the same as erasing it.
+theorem update_zero_eq_erase (w : Wallet Token) (t : Token) :
+    w.update t 0 = w.erase t := by
+  sorry
+
+-- Exercise 13.
+-- Drain is just erase, by the bridge above.
+theorem drain_eq_erase (w : Wallet Token) (t : Token) :
+    drain w t = w.erase t := by
+  sorry
+
+-- Exercise 14.
+-- A drained wallet has zero balance at the drained token as an erase fact.
+-- This should be another view of `get_drain_self`.
+theorem erase_get_self (w : Wallet Token) (t : Token) :
+    (w.erase t) t = 0 := by
+  sorry
+
+-- Exercise 15.
+-- Worth decomposition: total worth is worth after draining token `t`, plus the
+-- contribution of token `t`.
+theorem worth_destruct (w : Wallet Token) (price : Token → NNReal) (t : Token) :
+    worth w price = worth (drain w t) price + w t * price t := by
+  sorry
+
+-- Exercise 16.
+-- Deposit increases worth by exactly `amount * price t`.
+-- This is the first aggregate effect theorem.
+theorem worth_deposit
+    (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal) :
+    worth (deposit w t amount) price = worth w price + amount * price t := by
+  sorry
+
+-- Exercise 17.
+-- If a withdrawal is allowed, worth decreases by exactly `amount * price t`.
+-- NNReal subtraction is truncated, so the affordability hypothesis is part of
+-- the economic contract.
+theorem worth_withdraw
+    (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal)
+    (h : amount ≤ w t) :
+    worth (withdraw w t amount h) price + amount * price t = worth w price := by
+  sorry
+
 end Wallet
 
 end Unit5.KeyedLedgers
