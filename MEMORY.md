@@ -14,7 +14,7 @@ Current unit:
 - Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Session 16 next: keyed ledger / Finsupp wallet surface in
+- Session 16 complete: keyed ledger / Finsupp wallet surface in
   `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
@@ -28,7 +28,8 @@ Current curated migration status:
 - Unit 2 Core.lean fully populated
 - Unit 3 Core.lean fully populated
 - Unit 4 Core.lean fully populated
-- Unit 5 Scratch.lean has Session 16 Finsupp wallet exercises scaffolded
+- Unit 5 Scratch.lean has completed Session 16 Finsupp wallet update/readback
+  exercises
 
 Ready to branch into:
 - Unit 5: Finsupp ledgers over sparse token-balance maps
@@ -69,20 +70,15 @@ Date:
 - 2026-04-28
 
 What was verified:
-- `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean` checks clean
-- `Leaning/Units/Unit4_ArithmeticAndBounds/Core.lean` checks clean
-- `~/.elan/bin/lake build Leaning` completes successfully
+- `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean` checks clean
 
 What was established:
-- Unit 4 now has a stable continuous Layer A arithmetic surface
-- `constprod` output bound, denominator monotonicity, and homogeneity are
-  available in Core.lean
-- `PReal` positivity-by-type wrappers are available for the SX framework
-- the next content branch should move into sparse keyed ledger state
+- Unit 5 now has a first sparse wallet surface over `Token →₀ NNReal`
+- deposit, withdraw, and drain are modeled as keyed updates
+- same-key, different-key, and independent deposit commutation facts are proved
 
 Next intended move:
-- learner completes Unit 5 Session 16 in
-  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- scaffold Unit 5 Session 17 around worth/sum decomposition and conservation
 
 ## Stable Profile
 
@@ -97,7 +93,7 @@ Next intended move:
 
 ## Current Frontier
 
-- Active live file: `Leaning/Units/Unit4_ArithmeticAndBounds/Scratch.lean`
+- Active live file: `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 - Covered so far:
   - tiny state models
   - guarded transitions
@@ -116,7 +112,7 @@ Next intended move:
   - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
   - direct second-price auction mechanism scaffold
 - Current repo transition:
-- active learner work should now start Unit 5 after Unit 4 migration
+- active learner work has completed Unit 5's first keyed wallet update surface
 
 ## Concept State
 
@@ -425,6 +421,40 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-28 - Unit 5 Session 16 Complete
+
+Session intent:
+- review completed Finsupp wallet update/readback exercises
+
+Tutor actions:
+- inspected `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- validated the completed wallet definitions and readback theorems with Lean
+- checked whether the `noncomputable` markers could be removed; Lean confirmed
+  they are required because `Finsupp.update` is noncomputable
+- updated the checkpoint ledger to mark Session 16 complete
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+  checks cleanly
+
+Learner response / behavior:
+- completed the whole first Finsupp batch, including the independent-key
+  commutation stretch theorem
+
+Tutor analysis:
+- Session 16 score: 9/10. The core keyed-update semantics are correct and the
+  extensionality proof for `deposit_comm_diff` shows the right state-machine
+  reasoning pattern. Important tool point: even though the operations feel
+  computational, Mathlib's `Finsupp.update` is marked noncomputable, so these
+  wallet wrappers must be marked noncomputable too.
+
+Checkpoint result:
+- Unit 5 has a working sparse wallet layer over `Token →₀ NNReal`
+
+Next move:
+- scaffold Session 17 around `Finsupp.sum` / wallet worth decomposition and
+  conservation-style statements
 
 ### 2026-04-28 - Unit 5 Session 16 Scaffolded
 

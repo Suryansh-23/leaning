@@ -76,72 +76,69 @@ variable {Token : Type} [DecidableEq Token]
 -- Exercise 1.
 -- Add `amount` to token `t`.
 -- Think: update the current balance at `t` to `w t + amount`.
-def deposit (w : Wallet Token) (t : Token) (amount : NNReal) : Wallet Token := by
-  sorry
+noncomputable def deposit (w : Wallet Token) (t : Token) (amount : NNReal) : Wallet Token :=
+  w.update t (w t + amount)
 
 -- Exercise 2.
 -- Reading the same key after deposit gives old balance plus amount.
 theorem get_deposit_self (w : Wallet Token) (t : Token) (amount : NNReal) :
     (deposit w t amount) t = w t + amount := by
-  sorry
+  simp[deposit]
 
 -- Exercise 3.
 -- Reading a different key after deposit gives the old balance.
-theorem get_deposit_diff
-    (w : Wallet Token) (t t' : Token) (amount : NNReal) (h : t' ≠ t) :
+theorem get_deposit_diff (w : Wallet Token) (t t' : Token) (amount : NNReal) (h : t' ≠ t) :
     (deposit w t amount) t' = w t' := by
-  sorry
+  simp[deposit, Function.update, h]
 
 -- Exercise 4.
 -- Withdraw `amount` from token `t`.
 -- The proof argument records the economic precondition, even though NNReal
 -- subtraction is total. You may not need to use the proof yet.
-def withdraw
-    (w : Wallet Token) (t : Token) (amount : NNReal) (_h : amount ≤ w t) :
-    Wallet Token := by
-  sorry
+noncomputable def withdraw (w : Wallet Token) (t : Token) (amount : NNReal) (_h : amount ≤ w t) : Wallet Token :=
+  w.update t (w t - amount)
 
 -- Exercise 5.
 -- Reading the same key after withdrawal gives old balance minus amount.
-theorem get_withdraw_self
-    (w : Wallet Token) (t : Token) (amount : NNReal) (h : amount ≤ w t) :
+theorem get_withdraw_self (w : Wallet Token) (t : Token) (amount : NNReal) (h : amount ≤ w t) :
     (withdraw w t amount h) t = w t - amount := by
-  sorry
+  simp[withdraw]
 
 -- Exercise 6.
 -- Reading a different key after withdrawal gives the old balance.
-theorem get_withdraw_diff
-    (w : Wallet Token) (t t' : Token) (amount : NNReal)
-    (h : amount ≤ w t) (hdiff : t' ≠ t) :
+theorem get_withdraw_diff (w : Wallet Token) (t t' : Token) (amount : NNReal) (h : amount ≤ w t) (hdiff : t' ≠ t) :
     (withdraw w t amount h) t' = w t' := by
-  sorry
+  simp[withdraw, Function.update, hdiff]
 
 -- Exercise 7.
 -- Drain token `t`, setting its balance to zero.
-def drain (w : Wallet Token) (t : Token) : Wallet Token := by
-  sorry
+noncomputable def drain (w : Wallet Token) (t : Token) : Wallet Token :=
+  w.update t 0
 
 -- Exercise 8.
 -- Reading the drained key gives zero.
 theorem get_drain_self (w : Wallet Token) (t : Token) :
     (drain w t) t = 0 := by
-  sorry
+  simp[drain]
 
 -- Exercise 9.
 -- Reading any other key after drain gives the old balance.
-theorem get_drain_diff
-    (w : Wallet Token) (t t' : Token) (h : t' ≠ t) :
+theorem get_drain_diff (w : Wallet Token) (t t' : Token) (h : t' ≠ t) :
     (drain w t) t' = w t' := by
-  sorry
+  simp[drain, Function.update, h]
 
 -- Exercise 10.
 -- Stretch: updates at distinct tokens commute for deposits.
 -- This is the first local "independent keys commute" state-machine theorem.
-theorem deposit_comm_diff
-    (w : Wallet Token) (t0 t1 : Token) (x0 x1 : NNReal) (h : t0 ≠ t1) :
+theorem deposit_comm_diff (w : Wallet Token) (t0 t1 : Token) (x0 x1 : NNReal) (h : t0 ≠ t1) :
     deposit (deposit w t0 x0) t1 x1 =
       deposit (deposit w t1 x1) t0 x0 := by
-  sorry
+  ext t
+  by_cases ht0 : t = t0
+  ·  simp[deposit, ht0, h]
+  · by_cases ht1 : t = t1
+    · simp_all[deposit]
+    · simp[deposit, ht0, ht1]
 
 end Wallet
 
