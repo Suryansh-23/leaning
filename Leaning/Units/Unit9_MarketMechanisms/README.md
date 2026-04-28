@@ -78,7 +78,35 @@ See the reference Vyper implementation:
 
 ---
 
-## What this unit proves
+## Unit structure
+
+This unit has two parts: a fee warmup (short) and the stableswap capstone (main).
+
+### Part A: Fee-aware SX warmup
+
+Before stableswap, prove that adding a fee parameter `f ∈ (0,1)` to constprod
+produces a valid SX instance. This is covered in the Bartoletti 2025 follow-on
+paper — use it as reference rather than reproving from scratch.
+
+```lean
+noncomputable def fee_constprod (f : ℝ>0) (hf : f < 1) (x r0 r1 : ℝ>0) : ℝ>0 :=
+  r1 / (r0 + (1 - f) * x)
+```
+
+Key theorems:
+- `fee_constprod_outputbound` — output bound still holds under fee
+- `fee_adequacy` — `gain_direction` holds for fee-constprod (the rational actor
+  can't profitably round-trip even accounting for fees)
+- This connects Unit 3 (mechanism design / DSIC) to Unit 9: the fee level is a
+  mechanism design choice, and adequacy is a formal property
+
+Reference: `.context/papers/lean4-amm-fees-bartoletti-2025.pdf` (arXiv 2602.00101)
+
+---
+
+## What the capstone proves
+
+**Completion target: Phase 2. Phase 3 is a named stretch goal.**
 
 ### Phase 1: D existence and uniqueness
 
@@ -100,13 +128,15 @@ given input reserve change x, reserves r0, r1, and amplification A. Prove:
 - `stableswap_strictmono`: larger trades get worse rates
   (price impact increases with trade size)
 
-### Phase 3: Newton convergence (stretch goal)
+### Phase 3: Newton convergence *(named stretch goal — not required for completion)*
 
 - `newton_decreasing`: each Newton iterate is a decreasing sequence bounded
   below by zero
 - `newton_converges`: the iteration converges to the unique root of the cubic
-- This is the hardest part and is explicitly a stretch goal — partial progress
-  (monotonicity of iterates, or a fixed-point formulation) counts
+- Partial progress counts: monotonicity of iterates, or a fixed-point
+  formulation, or a contraction mapping argument on a compact interval
+- This is the hardest part of the unit and is explicitly optional; a future
+  paper extension or Unit 10 appendix item
 
 ### Phase 4: comparison with constprod
 
@@ -204,6 +234,52 @@ All papers are in `.context/papers/`. The reference Vyper implementation is in
 - Concentrated liquidity (Uniswap v3/v4 tick math) is explicitly deferred as a
   named long-term target. It requires Q64.96 fixed-point arithmetic, int24 ticks,
   and a full Layer B treatment — a multi-year research program on its own.
+
+---
+
+## Future directions (post-book)
+
+### Uniswap v4 hook property verification
+
+The SX framework built across Units 6-9 is the right mathematical foundation
+for formally verifying Uniswap v4 hook correctness properties. A hook is a
+callback contract that runs before/after swaps, deposits, and withdrawals. The
+relevant correctness properties are:
+
+- **Conservation** — the sum of all `currencyDelta` values for all actors is
+  zero after settlement (flash accounting closure)
+- **Hook isolation** — a hook cannot unilaterally drain reserves; the net delta
+  for (sender, hook) is invariant w.r.t. hook behavior
+- **Fee adequacy** — if a hook overrides the LP fee, the overridden fee still
+  satisfies the `gain_direction` property (fee-aware SX from Part A)
+
+A tractable formalization: model `BalanceDelta` as a pair of integers, treat
+`sqrtPriceX96` as an abstract ordered field element, and prove conservation
+compositionally across multiple hook callbacks. This avoids Q64.96 tick math
+(a multi-year separate effort) while capturing the economically interesting
+properties.
+
+The closest existing work is Certora's SMT-based hook verification (CVL rules,
+not a proof assistant). A Lean 4 version of those properties would be the first
+interactive theorem prover treatment of v4 hook correctness.
+
+Reference: `.context/papers/tickmath-tranquilli-2024.pdf` (TLA+ tick math, the
+only formal work on v3/v4 arithmetic)
+
+### Balancer weighted pools
+
+Balancer uses a weighted geometric mean invariant: `∏ xᵢ^wᵢ = k` where
+`Σwᵢ = 1`. This is another completely unoccupied gap in the proof-assistant
+literature — no formalization exists in any system. The `SX` framework applies
+directly; the proof structure would closely follow the stableswap capstone.
+
+### Concentrated liquidity (long-term target)
+
+Uniswap v3/v4 concentrated liquidity requires `sqrtPriceX96` (Q64.96
+fixed-point), `int24` ticks, and the `TickMath` library (20+ assembly-optimized
+multiplications). This is a multi-year research program — the only existing
+formal treatment is Tranquilli & Gupta's TLA+ model checking work, which does
+not use a proof assistant. Explicitly deferred.
 
 ---
 
