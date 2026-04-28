@@ -1,16 +1,22 @@
-# Unit 3: Strategic Games and Mechanisms
+# Unit 3: Mechanism Design for On-Chain Markets
 
 Purpose:
-- introduce small finite game/mechanism kernels
-- model players, actions, outcomes, payoffs, and simple strategic properties
-- prepare for dynamic fee mechanisms, auctions, and market design reasoning
+- formalize dominance, best response, and incentive compatibility
+- prove key mechanism properties for direct-revelation mechanisms
+- build proof shapes that reappear in AMM fee design and auction settlement
 
 Why it matters:
-- game-theoretic reasoning should be explicit in this book, not hidden inside
-  later DeFi units
-- the focus is executable strategic kernels, not heavyweight equilibrium theory
+- on-chain fee markets, auctions, and solver competitions are mechanisms
+- second-price auction truthfulness is a prototype for DSIC fee design
+- the proof shapes here (universal quantification over strategies, case splits
+  on win/lose conditions) appear throughout Units 7 and 9
 
 Typical theorem families:
-- best-response style properties
-- dominated-action or threshold-action lemmas
-- mechanism feasibility and sanity properties
+- weak dominance, transitivity, dominant → best response
+- second-price utility decomposition (both win, both lose, split cases)
+- truthful reporting weakly dominates any alternative report
+- mechanism feasibility and participation constraints
+
+Connects to:
+- Unit 7: rational actor / arbitrage framing uses the same gain-comparison shape
+- Unit 9: custom fee mechanisms are mechanism design problems

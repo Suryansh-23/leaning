@@ -54,82 +54,83 @@ This book follows a mixed spiral progression:
 - best-valid-choice correctness
 - tie-breaking and filtering
 
-### Unit 3: Strategic Games and Mechanisms
+### Unit 3: Mechanism Design for On-Chain Markets
 
-- finite game/mechanism kernels
-- players, actions, outcomes, payoffs
-- best responses and dominance-style reasoning
-- bridge to DeFi mechanism design
+- 2-player normal-form games, dominance, best response
+- direct mechanisms: second-price auctions, truthful reporting
+- incentive compatibility as a formal property
+- groundwork for fee design and auction settlement in later units
 
-### Unit 4: Arithmetic and Bounds
+### Unit 4: NNReal and Continuous Arithmetic
 
-- bounded controller math
-- monotonicity and threshold reasoning
-- arithmetic/cast management for protocol math
-- targeted mathlib/tactic exposure for later units
+- `ℝ≥0` (NNReal) and `ℝ>0` (PReal) as the number system for protocol math
+- `noncomputable` definitions and why they are right for mathematical specs
+- ordered field reasoning, positivity, division, and sqrt
+- Finsupp preview: finitely-supported functions as the ledger primitive
 
-### Unit 5: Keyed Ledgers and Failure Semantics
+### Unit 5: Finsupp Ledgers
 
-- finite/keyed state
-- credit/debit/transfer
-- `Option` / `Except`
-- state equality, untouched-key lemmas, conservation
+- `Finsupp T NNReal` as the wallet model (token → balance)
+- transfer, conservation, and untouched-key lemmas
+- multi-token state and account-indexed wallet sets
+- direct preparation for the AMM state container in Unit 6
 
-### Unit 6: AMM Core
+### Unit 6: AMM Kernels and the SX Framework
 
-- idealized constant-product AMM
-- fee-aware swaps
-- invariant-style reasoning
-- later discrete/integer wrinkles
-- optional LP accounting add-on
+- `SX = ℝ>0 → ℝ>0 → ℝ>0 → ℝ>0` as the parametric swap function type
+- constant-product as the first `SX` instance
+- output bound, no-drain, homogeneity, scale invariance
+- calibrated against dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024)
 
-### Unit 7: Dynamic Fee Mechanisms
+### Unit 7: AMM Economic Properties
 
-- dynamic fee controller `fee(state)` or `fee(state, action)`
-- boundedness / monotonicity / normalization
-- execution under dynamic fees
-- toy game-theoretic / mechanism-design layer
+- net worth, gain, and oracle-relative valuation
+- arbitrage direction: profit implies no reverse profit
+- optimal trade size: closed-form arbitrage for constant-product
+- rational actor framing for adversarial reasoning
 
-### Unit 8: Protocol State Machines
+### Unit 8: LP Mechanics
 
-- lending/accounting kernels
-- risk and liquidation
-- authorization/capabilities
-- time, epochs, oracle freshness
-- optional authenticated-state sub-unit (for example Merkle-style proofs)
+- deposit and redeem as state transitions
+- LP token minting, burning, and supply conservation
+- LP token pricing: (r0·p0 + r1·p1) / supply
+- invariants across the full create/deposit/swap/redeem lifecycle
 
-### Unit 9: Market Mechanisms
+### Unit 9: Novel AMM Designs
 
-- routing / aggregator kernels
-- intent / auction settlement
-- orderbook state-machine kernels
+- fee-aware `SX` instances: how fees modify the swap function
+- designing new invariant curves and proving their `SX` properties
+- range constraints, weighted pools, stableswap-style curves as targets
+- the design-verify cycle: propose an `SX`, prove it satisfies the framework
 
-### Unit 10: Verification Bridges
+### Unit 10: Verification Bridges (capstone)
 
-- reachable-state invariants
-- spec-vs-implementation refinement
-- accumulator loops and invariants
-- indexed updates and localized mutation
-- Rust/Aeneas-adjacent capstone
+- Layer B: computable integer arithmetic over `Nat`/`Int`
+- approximation theorems: discrete output vs continuous spec within ε
+- rounding direction proofs (always round against user, never against protocol)
+- connection path to real Solidity/Rust implementations
+
+### Appendix: Integer Bridge
+
+- overflow safety for `uint256`-scale arithmetic
+- fixed-point representations and their Lean models
+- extended approximation results from Unit 10
 
 ## What This Book Is Optimizing For
 
-- real protocol reasoning, not only theorem drills
-- multiple proof shapes, not only invariant preservation
-- forward-looking formal methods intuition
-- explicit transfer into DeFi / crypto / verification work
+- AMM design and DeFi protocol reasoning as the primary thread
+- Layer A (noncomputable, mathematical) for economic and structural proofs
+- Layer B (computable, integer) as a capstone verification bridge
+- parametric framework first, concrete instances second
+- novel AMM designs as the culmination, not an afterthought
 
 ## What Is Intentionally Deferred
 
-The roadmap deliberately does **not** start with:
-
-- concentrated liquidity
-- full Hyperliquid-style exchange kernels
-- deep continuous-economics proofs
-- full direct Rust verification
-- subtype-heavy arithmetic as the default beginner surface
-
-Those can come later, once the core unit sequence is stable.
+- concentrated liquidity (Uniswap v3 tick math) — a named future target after
+  Unit 9, not in the primary sequence
+- full EVM semantics and Solidity extraction — appendix territory
+- deep continuous-economics proofs beyond what the SX framework needs
+- subtype-heavy arithmetic before the learner is ready for it
 
 ## Current State
 

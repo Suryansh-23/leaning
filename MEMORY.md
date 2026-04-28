@@ -29,15 +29,20 @@ Current curated migration status:
 - Unit 3 Scratch.lean is scaffolded for Session 12
 
 Ready to branch into:
-- Unit 3: Strategic Games and Mechanisms
-- Unit 4: Arithmetic and Bounds (fallback if Unit 3 needs more numeric tooling first)
+- Unit 3: close out Session 13, migrate to Core.lean, then advance to Unit 4
+- Unit 4: NNReal / PReal arithmetic as the number system for Units 5-9
 
 Explicitly not started as Lean artifacts yet:
-- AMM core
-- dynamic fee mechanisms
-- keyed ledgers
-- protocol state machines
-- verification bridges
+- Unit 5: Finsupp Ledgers (token balance maps)
+- Unit 6: AMM Kernels and the SX Framework (constprod, outputbound, homogeneous, etc.)
+- Unit 7: AMM Economic Properties (gain_direction, arbitrage_solve)
+- Unit 8: LP Mechanics (deposit, redeem, supply conservation)
+- Unit 9: Novel AMM Designs (fee-aware SX, new invariant curves)
+- Unit 10: Verification Bridges / Integer Bridge (capstone)
+
+Reference material:
+- dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024) cloned at `.context/lean4-amm/`
+  — canonical calibration target for Unit 6 SX framework definitions and property names
 
 ## Last Checkpoint
 
@@ -402,6 +407,46 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-04-27 - Roadmap Refit: AMM Design Specialization
+
+Session intent:
+- vet and refit the entire curriculum around the learner's primary goal: AMM
+  design verification as a formal DeFi modeling foundation
+
+Tutor actions:
+- strategic discussion to clarify learner intent (AMM design + DeFi depth,
+  not just theorem-proving drills or a single v4-hook use case)
+- researched dpusceddu/lean4-amm (Pusceddu & Bartoletti, FMBC 2024) and
+  established it as the calibration reference for Units 6-9
+- cloned lean4-amm to `.context/lean4-amm/` (gitignored)
+- decided on Layer A (noncomputable, continuous math) for Units 4-9 and
+  Layer B (computable integer bridge) as a Unit 10 capstone
+- decided on Tier 1 (protocol-level, not EVM-heavy) as the primary focus
+- refit all unit names and READMEs (Units 3-10) to the AMM specialization path:
+  Unit 3 = Mechanism Design, Unit 4 = NNReal/PReal Arithmetic,
+  Unit 5 = Finsupp Ledgers, Unit 6 = AMM Kernels & SX Framework,
+  Unit 7 = AMM Economic Properties, Unit 8 = LP Mechanics,
+  Unit 9 = Novel AMM Designs, Unit 10 = Verification Bridges
+- rewrote docs/curriculum-map.md and README.md units section to match
+
+Validation / tests:
+- no Lean files changed; documentation refit only
+
+Learner response / behavior:
+- confirmed continuous-first is the right abstraction level
+- confirmed AMM design as the core specialization
+- confirmed Layer B integer bridge as capstone, not a blocker
+- confirmed library-based design from Unit 6 onwards is the right shape
+- confirmed lean4-amm as a useful reference rather than a direct copy
+
+Checkpoint result:
+- curriculum and all unit READMEs aligned to AMM design verification path
+- MEMORY.md updated with new unit names and lean4-amm reference
+
+Next move:
+- complete Unit 3 Session 13 (second-price auction dominance, 5 sorries)
+- then close out Unit 3 and move to Unit 4 NNReal/PReal arithmetic
 
 ### 2026-04-27 - Unit 3 Session 12 Complete And Mechanism Fast-Track
 
