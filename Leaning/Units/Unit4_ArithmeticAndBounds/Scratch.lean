@@ -157,7 +157,100 @@ example (x : ℝ>0) : 0 < x.val := x.property
 def PReal.add (x y : ℝ>0) : ℝ>0 :=
   ⟨x.val + y.val, add_pos x.property y.property⟩
 
--- No exercise here — just read and understand the pattern.
--- Unit 6 will give you a full PReal arithmetic surface to work with.
+/-!
+## Session 15: PReal wrappers and the SX-shaped boundary
+
+### Unit progress
+
+Unit 4 is roughly 60% complete. The NNReal arithmetic facts are done; this
+session moves those facts onto a strictly-positive API so Unit 6 can define
+swap functions without carrying `hx`, `hr0`, and `hr1` everywhere.
+
+### Prerequisite roundup
+
+New or newly important tools this session:
+
+- Subtype values are pairs: `⟨value, proof⟩`.
+  To build an `ℝ>0`, you must provide an `NNReal` value and a proof that the
+  value is strictly positive.
+
+- `.val` and `.property`.
+  If `x : ℝ>0`, then `x.val : NNReal` and `x.property : 0 < x.val`.
+  This is the main pattern: unwrap PReal inputs, apply an NNReal theorem, then
+  rewrap the result if the output type is again `ℝ>0`.
+
+- Dot-namespaced definitions such as `PReal.mul`.
+  This is just naming, not a special class mechanism. It keeps the positive-real
+  helper API grouped under `PReal`.
+
+- Wrapper theorem pattern.
+  A PReal theorem often has fewer explicit hypotheses because the hypotheses
+  live inside the inputs. For example, an NNReal theorem needing `hx : 0 < x`
+  will usually receive `x.property` in the PReal wrapper theorem.
+
+- Subtype equality is not the main goal here.
+  Most wrapper theorems below state equality/inequality of `.val` fields. That
+  avoids needing to prove two subtype values equal as pairs.
+
+- `rfl` can prove projection lemmas after a wrapper definition.
+  If a definition is literally `⟨someValue, someProof⟩`, then its `.val` is
+  definitionally `someValue`.
+
+### Session target
+
+Build the smallest positive-real arithmetic surface needed for the SX framework:
+closed multiplication/division, a positive `constprod`, and lifted versions of
+the three NNReal constprod facts.
+-/
+
+-- Exercise 1.
+-- Define positive multiplication.
+-- Goal: the product of two positive values is positive.
+def PReal.mul (x y : ℝ>0) : ℝ>0 := by
+  sorry
+
+-- Exercise 2.
+-- Define positive division.
+-- Goal: a positive numerator divided by a positive denominator is positive.
+noncomputable def PReal.div (x y : ℝ>0) : ℝ>0 := by
+  sorry
+
+-- Exercise 3.
+-- Wrap the NNReal constprod function as a strictly-positive function.
+-- Notice: this definition should not need a separate positivity hypothesis;
+-- positivity comes from the PReal arguments.
+noncomputable def PReal.constprod (x r0 r1 : ℝ>0) : ℝ>0 := by
+  sorry
+
+-- Exercise 4.
+-- Projection sanity check: the `.val` of the wrapper is the old NNReal function.
+theorem PReal.constprod_val (x r0 r1 : ℝ>0) :
+    (PReal.constprod x r0 r1).val =
+      Unit4.Arithmetic.constprod x.val r0.val r1.val := by
+  sorry
+
+-- Exercise 5.
+-- Lift outputbound to the PReal API.
+-- The statement has no explicit `hx`, `hr0`, or `hr1`; find them on the inputs.
+theorem PReal.constprod_outputbound (x r0 r1 : ℝ>0) :
+    x.val * (PReal.constprod x r0 r1).val < r1.val := by
+  sorry
+
+-- Exercise 6.
+-- Lift strictmono to the PReal API.
+-- This still needs the real comparison assumption between trade sizes.
+theorem PReal.constprod_strictmono
+    (x y r0 r1 : ℝ>0) (hxy : x.val ≤ y.val) :
+    (PReal.constprod y r0 r1).val ≤ (PReal.constprod x r0 r1).val := by
+  sorry
+
+-- Exercise 7.
+-- Lift homogeneity to the PReal API using `PReal.mul`.
+-- This is the first SX-shaped theorem: scale every positive input by the same
+-- positive value and the output rate is unchanged.
+theorem PReal.constprod_homogeneous (x r0 r1 a : ℝ>0) :
+    (PReal.constprod (PReal.mul a x) (PReal.mul a r0) (PReal.mul a r1)).val =
+      (PReal.constprod x r0 r1).val := by
+  sorry
 
 end Unit4.Arithmetic
