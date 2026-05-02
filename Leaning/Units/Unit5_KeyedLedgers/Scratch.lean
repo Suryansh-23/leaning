@@ -190,52 +190,79 @@ stuck. First try the named Finsupp lemma. If the direction is opposite, use
 -- Exercise 11.
 -- Define wallet worth under an external price function.
 -- `price t` is the value of one unit of token `t`.
-noncomputable def worth (w : Wallet Token) (price : Token → NNReal) : NNReal := by
-  sorry
+noncomputable def worth (w : Wallet Token) (price : Token → NNReal) : NNReal :=
+  w.sum fun t x => (x * price t)
 
 -- Exercise 12.
 -- Local bridge: updating a token to zero is the same as erasing it.
 theorem update_zero_eq_erase (w : Wallet Token) (t : Token) :
     w.update t 0 = w.erase t := by
-  sorry
+    ext t'
+    by_cases h : t = t'
+    · simp[Finsupp.update, Finsupp.erase, h]
+    · simp[Finsupp.update, Finsupp.erase, Function.update]
 
 -- Exercise 13.
 -- Drain is just erase, by the bridge above.
 theorem drain_eq_erase (w : Wallet Token) (t : Token) :
     drain w t = w.erase t := by
-  sorry
+  simp[drain, Finsupp.erase, update_zero_eq_erase w t]
 
 -- Exercise 14.
 -- A drained wallet has zero balance at the drained token as an erase fact.
 -- This should be another view of `get_drain_self`.
+omit [DecidableEq Token] in
 theorem erase_get_self (w : Wallet Token) (t : Token) :
     (w.erase t) t = 0 := by
-  sorry
+  simp[Finsupp.erase]
 
 -- Exercise 15.
 -- Worth decomposition: total worth is worth after draining token `t`, plus the
 -- contribution of token `t`.
 theorem worth_destruct (w : Wallet Token) (price : Token → NNReal) (t : Token) :
     worth w price = worth (drain w t) price + w t * price t := by
-  sorry
+  rw[drain_eq_erase]
+  unfold worth
+  rw[add_comm]
+  have hterm : w t * price t = (fun t (x : NNReal) => x * price t) t (w t) := by
+    simp
+  -- before: (Finsupp.sum w fun t x ↦ x * price t)
+  -- = w t * price t + (Finsupp.erase t w).sum fun t x ↦ x * price t
+  rw[hterm]
+  -- after: (Finsupp.sum w fun t x ↦ x * price t)
+  -- = (fun t x ↦ x * price t) t (w t) + (Finsupp.erase t w).sum fun t x ↦ x * price t
+  rw [Finsupp.add_sum_erase' w t (fun t (x : NNReal) => x * price t)]
+  simp
 
 -- Exercise 16.
 -- Deposit increases worth by exactly `amount * price t`.
 -- This is the first aggregate effect theorem.
-theorem worth_deposit
-    (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal) :
+theorem worth_deposit (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal) :
     worth (deposit w t amount) price = worth w price + amount * price t := by
-  sorry
+    rw[worth_destruct]
+    rw[get_deposit_self]
+    simp[deposit, drain]
+    ring_nf
+    rw[worth_destruct w price t]
+    simp[drain]
+    rw[<-add_assoc]
+    ring_nf
 
 -- Exercise 17.
 -- If a withdrawal is allowed, worth decreases by exactly `amount * price t`.
 -- NNReal subtraction is truncated, so the affordability hypothesis is part of
 -- the economic contract.
-theorem worth_withdraw
-    (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal)
-    (h : amount ≤ w t) :
+theorem worth_withdraw (w : Wallet Token) (price : Token → NNReal) (t : Token) (amount : NNReal) (h : amount ≤ w t) :
     worth (withdraw w t amount h) price + amount * price t = worth w price := by
-  sorry
+  rw[worth_destruct]
+  rw[get_withdraw_self]
+  have h1 : (w.withdraw t amount h).drain t = w.drain t := by simp[withdraw, drain]
+  simp[h1]
+  simp[worth_destruct w price t]
+  rw[tsub_mul]
+  rw[add_assoc]
+  rw[tsub_add_cancel_of_le]
+  nlinarith
 
 end Wallet
 

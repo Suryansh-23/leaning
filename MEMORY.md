@@ -14,7 +14,7 @@ Current unit:
 - Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Session 17 next: wallet worth / Finsupp sum decomposition in
+- Session 17 complete: wallet worth / Finsupp sum decomposition in
   `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
@@ -29,7 +29,7 @@ Current curated migration status:
 - Unit 3 Core.lean fully populated
 - Unit 4 Core.lean fully populated
 - Unit 5 Scratch.lean has completed Session 16 Finsupp wallet update/readback
-  exercises and Session 17 worth/sum exercises scaffolded
+  exercises and Session 17 worth/sum decomposition exercises
 
 Ready to branch into:
 - Unit 5: Finsupp ledgers over sparse token-balance maps
@@ -70,16 +70,18 @@ Date:
 - 2026-04-28
 
 What was verified:
-- `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean` checks clean
+- `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean` checks clean with no warnings
 
 What was established:
 - Unit 5 now has a first sparse wallet surface over `Token →₀ NNReal`
 - deposit, withdraw, and drain are modeled as keyed updates
 - same-key, different-key, and independent deposit commutation facts are proved
+- wallet worth, erase/update bridge, worth decomposition, and deposit/withdraw
+  worth effects are proved
 
 Next intended move:
-- learner completes Unit 5 Session 17 around worth/sum decomposition and
-  conservation
+- scaffold the next Unit 5 session around account-indexed wallet sets or
+  curate the stable Unit 5 wallet layer into Core.lean
 
 ## Stable Profile
 
@@ -113,7 +115,7 @@ Next intended move:
   - concrete Prisoner's Dilemma Prop proofs and executable Bool sanity checks
   - direct second-price auction mechanism scaffold
 - Current repo transition:
-- active learner work has completed Unit 5's first keyed wallet update surface
+- active learner work has completed the first aggregate worth layer of Unit 5
 
 ## Concept State
 
@@ -422,6 +424,40 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-05-02 - Unit 5 Session 17 Complete
+
+Session intent:
+- review completed wallet worth and Finsupp sum decomposition exercises
+
+Tutor actions:
+- inspected `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- validated the completed worth definitions and aggregate effect theorems with Lean
+- removed a low-signal unused-section-variable warning on `erase_get_self`
+- updated the checkpoint ledger to mark Session 17 complete
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+  checks cleanly with no warnings
+
+Learner response / behavior:
+- completed the aggregate wallet-value batch after a few focused hints on
+  `worth_destruct`, `tsub_mul`, and additive reordering
+
+Tutor analysis:
+- Session 17 score: 8.8/10. The important conceptual jump happened: the learner
+  moved from pointwise keyed updates to aggregate worth reasoning via
+  `Finsupp.add_sum_erase'`. The main remaining growth point is cleaner theorem
+  shaping before proof search, especially spotting when a bad definition shape
+  is the real blocker rather than the local tactic step.
+
+Checkpoint result:
+- Unit 5 now has both the local wallet-update API and the first aggregate worth
+  / conservation-style layer
+
+Next move:
+- either scaffold account-indexed wallet sets to finish the state-container
+  layer, or curate the stable Unit 5 wallet slice into Core.lean first
 
 ### 2026-04-28 - Unit 5 Session 17 Scaffolded
 
