@@ -14,7 +14,7 @@ Current unit:
 - Unit 5: Finsupp Ledgers
 
 Current sub-unit / frontier:
-- Session 17 complete: wallet worth / Finsupp sum decomposition in
+- Session 18 next: account-indexed wallet sets and token supply in
   `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
 
 Last solid checkpoint:
@@ -29,7 +29,8 @@ Current curated migration status:
 - Unit 3 Core.lean fully populated
 - Unit 4 Core.lean fully populated
 - Unit 5 Scratch.lean has completed Session 16 Finsupp wallet update/readback
-  exercises and Session 17 worth/sum decomposition exercises
+  exercises, Session 17 worth/sum decomposition exercises, and Session 18
+  account-set exercises scaffolded
 
 Ready to branch into:
 - Unit 5: Finsupp ledgers over sparse token-balance maps
@@ -80,8 +81,8 @@ What was established:
   worth effects are proved
 
 Next intended move:
-- scaffold the next Unit 5 session around account-indexed wallet sets or
-  curate the stable Unit 5 wallet layer into Core.lean
+- learner completes Unit 5 Session 18 around account-indexed wallet sets and
+  token supply
 
 ## Stable Profile
 
@@ -424,6 +425,44 @@ Status:
 - active
 
 ## Session Logbook
+
+### 2026-05-03 - Unit 5 Session 18 Scaffolded
+
+Session intent:
+- continue Unit 5 past one-wallet worth into account-indexed state containers
+
+Tutor actions:
+- inspected the current Unit 5 scratch/core state, Unit 5 README, checkpoint
+  ledger, and lean4-amm `AtomicWallSet` reference
+- chose to continue Unit 5 instead of curating immediately, because the state
+  container layer is still missing
+- scaffolded Session 18 in
+  `Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+- added the prerequisite roundup for nested Finsupps, outer-map updates,
+  account-local readback theorems, and supply across accounts
+- fixed two scaffold issues during validation: `WalletSet` parameter order and
+  the reserved identifier `from`
+
+Validation / tests:
+- `~/.elan/bin/lake env lean Leaning/Units/Unit5_KeyedLedgers/Scratch.lean`
+  checks with ten intended `sorry` warnings
+
+Learner response / behavior:
+- asked the tutor to continue with the next best move
+
+Tutor analysis:
+- Unit 5 is not quite at the right curation boundary yet; account-indexed
+  wallet sets are the missing bridge from local wallet reasoning to protocol
+  state reasoning
+
+Checkpoint result:
+- Session 18 is ready in Unit 5 Scratch; current unsolved frontier is
+  account-indexed wallet updates, token supply over accounts, and a transfer
+  supply-preservation stretch theorem
+
+Next move:
+- learner solves Session 18; tutor reviews, then likely curates Unit 5 Core
+  or adds one final conservation/account-transfer batch if needed
 
 ### 2026-05-02 - Unit 5 Session 17 Complete
 

@@ -266,4 +266,142 @@ theorem worth_withdraw (w : Wallet Token) (price : Token → NNReal) (t : Token)
 
 end Wallet
 
+/-!
+## Session 18: account-indexed wallet sets and token supply
+
+### Unit progress
+
+Unit 5 is roughly 55% complete. You now have both local wallet updates and
+aggregate one-wallet worth. This session lifts the whole wallet layer one level
+up: a system state is a sparse map from accounts to sparse token wallets.
+
+### Why this session is next
+
+Unit 6 will need user/account state, not just one isolated wallet. The new
+proof surface is nested Finsupps plus "supply across accounts" as a sum over
+wallets.
+
+### Prerequisite roundup
+
+New tools and patterns:
+
+- Nested sparse maps:
+  `Account →₀ (Token →₀ NNReal)` means each account has a sparse token wallet,
+  and only finitely many accounts are nonzero.
+
+- A state lookup returns a wallet:
+  if `s : WalletSet Account Token`, then `s a : Wallet Token`.
+  You will usually update the outer map with an inner-wallet update.
+
+- Account-local updates mirror wallet-local updates.
+  The pattern is:
+  `s.update a ((s a).deposit t x)`
+  or
+  `s.update a ((s a).withdraw t x h)`.
+
+- `s.sum fun _ w => w t` defines token supply across accounts.
+  This is the aggregate analogue of `worth`, but now the summed thing is each
+  account wallet's balance at token `t`.
+
+- Different-account reasoning is the new "untouched-key" layer.
+  Session 16 had different token keys inside one wallet.
+  Session 18 adds different account keys outside the wallet.
+
+### Hint policy
+
+For same-account vs different-account results, start with `simp [definition]`.
+For supply results, unfold `supply` and try the corresponding wallet theorem
+inside the sum.
+-/
+
+variable (Account : Type) [DecidableEq Account]
+
+abbrev WalletSet (Account Token : Type) [DecidableEq Token] : Type :=
+  Account →₀ Wallet Token
+
+namespace WalletSet
+
+variable {Token Account : Type} [DecidableEq Token] [DecidableEq Account]
+
+-- Exercise 18.
+-- Alias the outer lookup so theorem statements read like a state API.
+def get (s : WalletSet Account Token) (a : Account) : Wallet Token :=
+  s a
+
+-- Exercise 19.
+-- Deposit into one account's wallet at one token.
+noncomputable def deposit
+    (s : WalletSet Account Token) (a : Account) (t : Token) (amount : NNReal) :
+    WalletSet Account Token := by
+  sorry
+
+-- Exercise 20.
+-- Reading the updated account gives the deposited wallet.
+theorem get_deposit_self
+    (s : WalletSet Account Token) (a : Account) (t : Token) (amount : NNReal) :
+    (deposit s a t amount).get a = (s.get a).deposit t amount := by
+  sorry
+
+-- Exercise 21.
+-- Reading a different account is unchanged.
+theorem get_deposit_diff_account
+    (s : WalletSet Account Token) (a a' : Account) (t : Token)
+    (amount : NNReal) (h : a' ≠ a) :
+    (deposit s a t amount).get a' = s.get a' := by
+  sorry
+
+-- Exercise 22.
+-- Withdraw from one account's wallet at one token.
+noncomputable def withdraw
+    (s : WalletSet Account Token) (a : Account) (t : Token)
+    (amount : NNReal) (h : amount ≤ s.get a t) :
+    WalletSet Account Token := by
+  sorry
+
+-- Exercise 23.
+-- Reading the updated account after withdrawal gives the withdrawn wallet.
+theorem get_withdraw_self
+    (s : WalletSet Account Token) (a : Account) (t : Token)
+    (amount : NNReal) (h : amount ≤ s.get a t) :
+    (withdraw s a t amount h).get a = (s.get a).withdraw t amount h := by
+  sorry
+
+-- Exercise 24.
+-- Total supply of token `t` across all accounts.
+noncomputable def supply (s : WalletSet Account Token) (t : Token) : NNReal := by
+  sorry
+
+-- Exercise 25.
+-- Depositing token `t` into one account increases total supply of `t` by amount.
+theorem supply_deposit_self
+    (s : WalletSet Account Token) (a : Account) (t : Token) (amount : NNReal) :
+    supply (deposit s a t amount) t = supply s t + amount := by
+  sorry
+
+-- Exercise 26.
+-- Depositing token `t` does not affect supply of a different token `t'`.
+theorem supply_deposit_diff
+    (s : WalletSet Account Token) (a : Account) (t t' : Token)
+    (amount : NNReal) (h : t ≠ t') :
+    supply (deposit s a t amount) t' = supply s t' := by
+  sorry
+
+-- Exercise 27.
+-- Stretch: transfer within the same token from one account to another.
+noncomputable def transfer
+    (s : WalletSet Account Token) (fromAcct toAcct : Account) (t : Token)
+    (amount : NNReal) (h : amount ≤ s.get fromAcct t) :
+    WalletSet Account Token := by
+  sorry
+
+-- Exercise 28.
+-- Stretch: transfer preserves total supply of that token.
+theorem supply_transfer
+    (s : WalletSet Account Token) (fromAcct toAcct : Account) (t : Token)
+    (amount : NNReal) (h : amount ≤ s.get fromAcct t) :
+    supply (transfer s fromAcct toAcct t amount h) t = supply s t := by
+  sorry
+
+end WalletSet
+
 end Unit5.KeyedLedgers
